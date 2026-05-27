@@ -1081,6 +1081,10 @@ input[type="range"] {
   background: #f7faf8;
 }
 
+.wallet-card > div {
+  min-width: 0;
+}
+
 .wallet-card span {
   display: block;
   color: #68716c;
@@ -1091,6 +1095,9 @@ input[type="range"] {
   display: block;
   margin-top: 4px;
   color: #1f2b28;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .ok-text {

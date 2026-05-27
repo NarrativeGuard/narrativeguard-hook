@@ -93,6 +93,22 @@ const CURRENT_XLAYER_DEPLOYMENT = {
   initializePoolTx: "0xddf9684b8e64829b56836322d3a0c8acaedb2c0c7545d3eb3db49e2a281313a1",
 };
 
+const eip6963Providers = new Map();
+
+if (typeof window !== "undefined") {
+  window.addEventListener("eip6963:announceProvider", (event) => {
+    const detail = event.detail;
+    if (detail?.provider?.request) {
+      const key = detail.info?.uuid || detail.info?.rdns || detail.info?.name || `provider-${eip6963Providers.size}`;
+      eip6963Providers.set(key, detail);
+    }
+  });
+
+  queueMicrotask(() => {
+    window.dispatchEvent(new Event("eip6963:requestProvider"));
+  });
+}
+
 function shortAddress(address) {
   return `${address.slice(0, 6)}...${address.slice(-4)}`;
 }
@@ -127,6 +143,54 @@ function structField(value, name, index) {
 
 function codeBytes(code) {
   return code && code !== "0x" ? (code.length - 2) / 2 : 0;
+}
+
+function requestEip6963Providers() {
+  if (typeof window === "undefined") return [];
+  window.dispatchEvent(new Event("eip6963:requestProvider"));
+  return Array.from(eip6963Providers.values());
+}
+
+function providerName(provider, fallback) {
+  return provider?.name || provider?.walletName || provider?.providerName || fallback;
+}
+
+function isOkxProvider(provider, info = {}) {
+  const name = `${info.name || ""} ${info.rdns || ""} ${providerName(provider, "")}`;
+  return Boolean(provider?.isOkxWallet || provider?.isOKXWallet || provider?.isOKExWallet || /okx|okex/i.test(name));
+}
+
+function findOkxProvider() {
+  if (typeof window === "undefined") return undefined;
+
+  if (window.okxwallet?.request) return { provider: window.okxwallet, label: "OKX Wallet" };
+  if (window.okxwallet?.ethereum?.request) return { provider: window.okxwallet.ethereum, label: "OKX Wallet" };
+
+  const injectedProviders = Array.isArray(window.ethereum?.providers) ? window.ethereum.providers : [];
+  const okxInjected = injectedProviders.find((provider) => isOkxProvider(provider));
+  if (okxInjected?.request) return { provider: okxInjected, label: providerName(okxInjected, "OKX Wallet") };
+
+  const okxAnnounced = requestEip6963Providers().find((detail) => isOkxProvider(detail.provider, detail.info));
+  if (okxAnnounced?.provider?.request) {
+    return { provider: okxAnnounced.provider, label: okxAnnounced.info?.name || "OKX Wallet" };
+  }
+
+  return undefined;
+}
+
+function findInjectedProvider() {
+  if (typeof window === "undefined") return undefined;
+
+  if (window.ethereum?.request) {
+    return { provider: window.ethereum, label: providerName(window.ethereum, "Injected wallet") };
+  }
+
+  const announced = requestEip6963Providers().find((detail) => detail.provider?.request);
+  if (announced?.provider?.request) {
+    return { provider: announced.provider, label: announced.info?.name || "Injected wallet" };
+  }
+
+  return undefined;
 }
 
 function eventLabel(eventName, t) {
@@ -170,6 +234,8 @@ export function DeployPanel({ t }) {
   const selected = chains[networkKey];
   const [walletAddress, setWalletAddress] = useState("");
   const [walletChainId, setWalletChainId] = useState("");
+  const [walletProviderKind, setWalletProviderKind] = useState("okx");
+  const [walletProviderLabel, setWalletProviderLabel] = useState("");
   const [poolManager, setPoolManager] = useState(selected.defaultPoolManager);
   const [riskOracle, setRiskOracle] = useState("");
   const [hookAddress, setHookAddress] = useState("");
@@ -238,24 +304,27 @@ export function DeployPanel({ t }) {
     clearActivity();
   }
 
-  async function getProvider() {
-    if (!window.ethereum) {
-      throw new Error(t("noWallet"));
+  async function getProvider(kind = walletProviderKind) {
+    const resolved = kind === "okx" ? findOkxProvider() : findInjectedProvider();
+    if (!resolved?.provider?.request) {
+      throw new Error(t(kind === "okx" ? "noOkxWallet" : "noWallet"));
     }
-    return window.ethereum;
+    return resolved;
   }
 
-  async function connectWallet() {
+  async function connectWallet(kind = walletProviderKind) {
     setBusy(true);
     try {
-      const provider = await getProvider();
+      const { provider, label } = await getProvider(kind);
       const [account] = await provider.request({ method: "eth_requestAccounts" });
       const chainIdHex = await provider.request({ method: "eth_chainId" });
       const accountAddress = getAddress(account);
       setWalletAddress(accountAddress);
+      setWalletProviderKind(kind);
+      setWalletProviderLabel(label);
       setRiskOracle((current) => current || accountAddress);
       setWalletChainId(String(Number(BigInt(chainIdHex))));
-      appendLog(t("logWalletConnected", { address: shortAddress(accountAddress) }));
+      appendLog(t("logWalletConnected", { provider: label, address: shortAddress(accountAddress) }));
     } catch (error) {
       appendLog(error.message);
     } finally {
@@ -266,7 +335,7 @@ export function DeployPanel({ t }) {
   async function switchNetwork() {
     setBusy(true);
     try {
-      const provider = await getProvider();
+      const { provider, label } = await getProvider(walletProviderKind);
       const chainId = numberToHex(selected.chain.id);
       try {
         await provider.request({
@@ -288,7 +357,13 @@ export function DeployPanel({ t }) {
           ],
         });
       }
-      await connectWallet();
+      const [account] = await provider.request({ method: "eth_requestAccounts" });
+      const chainIdHex = await provider.request({ method: "eth_chainId" });
+      const accountAddress = getAddress(account);
+      setWalletAddress(accountAddress);
+      setWalletProviderLabel(label);
+      setRiskOracle((current) => current || accountAddress);
+      setWalletChainId(String(Number(BigInt(chainIdHex))));
       appendLog(t("logNetworkReady", { network: t(selected.labelKey) }));
     } catch (error) {
       appendLog(error.message);
@@ -298,7 +373,7 @@ export function DeployPanel({ t }) {
   }
 
   async function getWalletClient() {
-    const provider = await getProvider();
+    const { provider } = await getProvider(walletProviderKind);
     const [account] = await provider.request({ method: "eth_requestAccounts" });
     const accountAddress = getAddress(account);
     return createWalletClient({
@@ -309,7 +384,7 @@ export function DeployPanel({ t }) {
   }
 
   async function ensureReady() {
-    if (!walletAddress) await connectWallet();
+    if (!walletAddress) await connectWallet(walletProviderKind);
     if (!connectedToTarget) await switchNetwork();
   }
 
@@ -712,6 +787,10 @@ export function DeployPanel({ t }) {
 
         <div className="wallet-card">
           <div>
+            <span>{t("walletProvider")}</span>
+            <strong>{walletProviderLabel || t(walletProviderKind === "okx" ? "okxWallet" : "injectedWallet")}</strong>
+          </div>
+          <div>
             <span>{t("wallet")}</span>
             <strong>{walletAddress ? shortAddress(walletAddress) : t("notConnected")}</strong>
           </div>
@@ -725,9 +804,13 @@ export function DeployPanel({ t }) {
       </div>
 
       <div className="deploy-actions">
-        <button onClick={connectWallet} disabled={busy}>
+        <button onClick={() => connectWallet("okx")} disabled={busy}>
           <Wallet size={18} />
-          {t("connect")}
+          {t("connectOkx")}
+        </button>
+        <button onClick={() => connectWallet("injected")} disabled={busy}>
+          <Wallet size={18} />
+          {t("connectInjected")}
         </button>
         <button onClick={switchNetwork} disabled={busy}>
           <Network size={18} />

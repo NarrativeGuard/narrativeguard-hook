@@ -76,7 +76,7 @@ npm run frontend:dev
 
 The frontend is the primary deliverable path. It presents NarrativeGuard as a product console for launch teams, market makers, and pool operators. It includes a wallet-connected X Layer panel for:
 
-- connecting OKX Wallet or MetaMask;
+- connecting through a dedicated OKX Wallet provider path, with a generic injected-wallet fallback;
 - switching the interface between Chinese and English;
 - switching/adding X Layer mainnet;
 - loading the current deployed Hook and Pool;
@@ -124,7 +124,7 @@ PoolManager:
 Recommended product/demo path:
 
 1. Open https://narrativeguard-hook.vercel.app.
-2. Connect OKX Wallet or MetaMask on X Layer.
+2. Use **Connect OKX** for OKX Wallet, or **Connect Wallet** as an injected-wallet fallback.
 3. Use **Load Current** to load the existing X Layer deployment before demonstrating live controls.
 
 Local development is available with:
