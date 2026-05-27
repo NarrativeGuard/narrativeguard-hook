@@ -1,0 +1,80 @@
+# Tweet Copy
+
+## English
+
+Building NarrativeGuard for OKX Web3 / X Layer Build X.
+
+NarrativeGuard is X Layer Meme Launch Risk OS: a Uniswap v4 `beforeSwap` Hook plus operator console that turns meme-market narrative risk into onchain trade policy.
+
+- dynamic fees
+- anti-snipe windows
+- trade caps
+- cooldowns
+- whitelist/blacklist
+- emergency pause
+- live risk report + Hook timeline
+
+Hook the Future on X Layer.
+
+@XLayerOfficial @Uniswap @flapdotsh
+
+Hook: 0x86Ef9197Bde5Dd40352D0a58589b1772376B4080
+PoolId: 0x57c6a64160f4f9fc82d32432ab6f242b52f28159e6ed882b024ebdf3ebf57bf1
+
+## English Thread
+
+1/ We are building NarrativeGuard for Hook the Future on X Layer.
+
+Meme pools move at narrative speed. NarrativeGuard turns offchain risk signals into onchain `beforeSwap` protections and a launch-team Risk OS.
+
+@XLayerOfficial @Uniswap @flapdotsh
+
+2/ Core mechanics:
+
+- dynamic LP fee override
+- launch-window anti-snipe checks
+- single-trade caps
+- trader cooldowns
+- whitelist/blacklist
+- emergency pause
+
+3/ The console adds Launch Shield templates, a risk report, Oracle Agent Mesh, Hook response timeline, and wallet-signed X Layer controls.
+
+4/ The goal: help meme projects launch with better market structure while keeping swaps open, auditable, and composable through Uniswap v4.
+
+Hook: 0x86Ef9197Bde5Dd40352D0a58589b1772376B4080
+PoolId: 0x57c6a64160f4f9fc82d32432ab6f242b52f28159e6ed882b024ebdf3ebf57bf1
+
+## Chinese
+
+我在做 NarrativeGuard，参加 OKX Web3 / X Layer Build X。
+
+这是 X Layer Meme Launch Risk OS：用 Uniswap v4 `beforeSwap` Hook + 产品控制台，把 Meme 叙事风险分数变成链上交易规则。
+
+动态手续费、防狙击、单笔上限、冷却、白黑名单、紧急暂停。
+
+还有风险报告、Agent 面板、Hook 时间线和钱包签名控制。
+
+@XLayerOfficial @Uniswap @flapdotsh
+
+Hook: 0x86Ef9197Bde5Dd40352D0a58589b1772376B4080
+PoolId: 0x57c6a64160f4f9fc82d32432ab6f242b52f28159e6ed882b024ebdf3ebf57bf1
+
+## Chinese Thread
+
+1/ 我们在 X Layer 的 Hook the Future 做 NarrativeGuard。
+
+Meme 池的风险往往先出现在叙事层：社媒热度、KOL 轮动、新钱包涌入、LP 不稳定、谣言扩散。
+
+@XLayerOfficial @Uniswap @flapdotsh
+
+2/ NarrativeGuard 把这些链下风险信号变成 Uniswap v4 `beforeSwap` 的链上规则：
+
+动态费率、防狙击窗口、单笔上限、冷却时间、白黑名单、紧急暂停。
+
+3/ 前端是 Risk OS：Launch Shield 模板、风险报告、Oracle Agent Mesh、Hook 响应时间线、钱包签名的 X Layer 控制。
+
+4/ 目标是让 Meme 项目拥有更好的发行和交易保护，同时保留 Uniswap v4 的开放、可组合、可验证体验。
+
+Hook: 0x86Ef9197Bde5Dd40352D0a58589b1772376B4080
+PoolId: 0x57c6a64160f4f9fc82d32432ab6f242b52f28159e6ed882b024ebdf3ebf57bf1

@@ -1,0 +1,36 @@
+{
+  "name": "narrativeguard-hook",
+  "version": "0.1.0",
+  "private": true,
+  "description": "NarrativeGuard Hook: narrative-driven Uniswap v4 meme trading protection for X Layer.",
+  "type": "module",
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "typecheck": "tsc --noEmit",
+    "build": "npm run frontend:build",
+    "clean": "hardhat clean",
+    "deploy:xlayer-mainnet": "hardhat run scripts/deploy.ts --network xlayerMainnet",
+    "auto:xlayer-mainnet-demo": "DEPLOY_DEMO_TOKENS=true CONFIGURE_DEMO_POOL=true INITIALIZE_V4_POOL=true npm run deploy:xlayer-mainnet",
+    "verify:xlayer-mainnet": "node scripts/verify-xlayer-deployment.mjs",
+    "export:frontend-artifacts": "node scripts/export-frontend-artifacts.mjs",
+    "frontend:dev": "npm run compile && npm run export:frontend-artifacts && npm --prefix frontend run dev",
+    "frontend:build": "npm run export:frontend-artifacts && npm --prefix frontend run build",
+    "check": "npm run compile && npm run typecheck && npm run test && npm run frontend:build"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-node-test-runner": "^3.0.16",
+    "@nomicfoundation/hardhat-viem": "^3.0.8",
+    "@openzeppelin/contracts": "^5.6.1",
+    "@types/node": "^25.9.1",
+    "@uniswap/v4-core": "^1.0.2",
+    "@uniswap/v4-periphery": "^1.0.3",
+    "dotenv": "^17.4.2",
+    "hardhat": "^3.5.1",
+    "typescript": "^5.9.3",
+    "viem": "^2.47.6"
+  },
+  "overrides": {
+    "undici": "^6.26.0"
+  }
+}
