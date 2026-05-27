@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">NarrativeGuard architecture card</title>
+  <desc id="desc">Architecture card showing offchain narrative signals flowing through an oracle agent mesh into a Uniswap v4 beforeSwap Hook for protected meme pools on X Layer.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#07110f"/>
+      <stop offset="0.52" stop-color="#0e1d1a"/>
+      <stop offset="1" stop-color="#04100e"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#112a25"/>
+      <stop offset="1" stop-color="#071713"/>
+    </linearGradient>
+    <linearGradient id="mint" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#b9fff0"/>
+      <stop offset="0.55" stop-color="#2ee9c7"/>
+      <stop offset="1" stop-color="#0c8e79"/>
+    </linearGradient>
+    <linearGradient id="amber" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffd88a"/>
+      <stop offset="1" stop-color="#db8508"/>
+    </linearGradient>
+    <filter id="softGlow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="10" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0.12 0 0 0 0 0.95 0 0 0 0 0.78 0 0 0 0.34 0"/>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <pattern id="grid" width="56" height="56" patternUnits="userSpaceOnUse">
+      <path d="M56 0H0V56" fill="none" stroke="#7fffea" stroke-opacity="0.065" stroke-width="1"/>
+    </pattern>
+    <marker id="arrowMint" viewBox="0 0 16 16" refX="13" refY="8" markerWidth="10" markerHeight="10" orient="auto-start-reverse">
+      <path d="M2 2L14 8L2 14Z" fill="#40f3d2"/>
+    </marker>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <rect width="1600" height="900" fill="url(#grid)"/>
+  <path d="M-40 690C180 570 380 645 610 515C810 401 1025 325 1260 395C1405 438 1510 490 1640 455" fill="none" stroke="#40f3d2" stroke-width="5" stroke-opacity="0.22"/>
+  <path d="M-60 745C175 650 390 690 645 552C860 435 1050 390 1275 452C1430 495 1510 535 1660 505" fill="none" stroke="#e99418" stroke-width="4" stroke-opacity="0.18"/>
+
+  <g transform="translate(78 72)">
+    <rect x="0" y="0" width="480" height="54" rx="27" fill="#102b26" stroke="#35e9c8" stroke-opacity="0.38"/>
+    <text x="28" y="36" font-family="Inter, Arial, Helvetica, sans-serif" font-size="24" font-weight="720" fill="#b9fff0">OKX Web3 / X Layer Build X Hackathon</text>
+
+    <text x="0" y="139" font-family="Inter, Arial, Helvetica, sans-serif" font-size="70" font-weight="850" fill="#f7fffb">NarrativeGuard</text>
+    <text x="0" y="199" font-family="Inter, Arial, Helvetica, sans-serif" font-size="40" font-weight="760" fill="#86f5df">Risk architecture for meme launches</text>
+    <text x="0" y="255" font-family="Inter, Arial, Helvetica, sans-serif" font-size="28" font-weight="520" fill="#d7e9e5">Offchain narrative risk becomes onchain swap policy at Uniswap v4 beforeSwap.</text>
+  </g>
+
+  <g transform="translate(78 380)">
+    <g>
+      <rect width="300" height="170" rx="22" fill="url(#panel)" stroke="#36e7c7" stroke-opacity="0.48"/>
+      <text x="28" y="45" font-family="Inter, Arial, Helvetica, sans-serif" font-size="30" font-weight="800" fill="#ffffff">Narrative signals</text>
+      <text x="28" y="86" font-family="Inter, Arial, Helvetica, sans-serif" font-size="22" font-weight="580" fill="#b9d0cb">Social heat</text>
+      <text x="28" y="118" font-family="Inter, Arial, Helvetica, sans-serif" font-size="22" font-weight="580" fill="#b9d0cb">KOL shifts</text>
+      <text x="28" y="150" font-family="Inter, Arial, Helvetica, sans-serif" font-size="22" font-weight="580" fill="#b9d0cb">Wallet and LP stress</text>
+    </g>
+
+    <path d="M326 85H380" stroke="#40f3d2" stroke-width="5" stroke-linecap="round" marker-end="url(#arrowMint)"/>
+
+    <g transform="translate(410 0)">
+      <rect width="300" height="170" rx="22" fill="url(#panel)" stroke="#36e7c7" stroke-opacity="0.48"/>
+      <text x="28" y="45" font-family="Inter, Arial, Helvetica, sans-serif" font-size="30" font-weight="800" fill="#ffffff">Oracle Agent Mesh</text>
+      <text x="28" y="86" font-family="Inter, Arial, Helvetica, sans-serif" font-size="22" font-weight="580" fill="#b9d0cb">Risk score: 0-10,000 bps</text>
+      <text x="28" y="118" font-family="Inter, Arial, Helvetica, sans-serif" font-size="22" font-weight="580" fill="#b9d0cb">Narrative hash</text>
+      <text x="28" y="150" font-family="Inter, Arial, Helvetica, sans-serif" font-size="22" font-weight="580" fill="#b9d0cb">Owner / oracle controls</text>
+    </g>
+
+    <path d="M736 85H780" stroke="#40f3d2" stroke-width="5" stroke-linecap="round" marker-end="url(#arrowMint)"/>
+
+    <g transform="translate(810 0)" filter="url(#softGlow)">
+      <rect width="300" height="170" rx="22" fill="#09231e" stroke="url(#mint)" stroke-width="4"/>
+      <text x="28" y="45" font-family="Inter, Arial, Helvetica, sans-serif" font-size="30" font-weight="850" fill="#ffffff">v4 beforeSwap Hook</text>
+      <text x="28" y="86" font-family="Inter, Arial, Helvetica, sans-serif" font-size="22" font-weight="620" fill="#d7fff7">Screen each swap</text>
+      <text x="28" y="118" font-family="Inter, Arial, Helvetica, sans-serif" font-size="22" font-weight="620" fill="#d7fff7">Return fee override</text>
+      <text x="28" y="150" font-family="Inter, Arial, Helvetica, sans-serif" font-size="22" font-weight="620" fill="#d7fff7">Revert hostile flow</text>
+    </g>
+
+    <path d="M1136 85H1180" stroke="#40f3d2" stroke-width="5" stroke-linecap="round" marker-end="url(#arrowMint)"/>
+
+    <g transform="translate(1210 0)">
+      <rect width="234" height="170" rx="22" fill="url(#panel)" stroke="#36e7c7" stroke-opacity="0.48"/>
+      <text x="28" y="45" font-family="Inter, Arial, Helvetica, sans-serif" font-size="28" font-weight="800" fill="#ffffff">Protected</text>
+      <text x="28" y="82" font-family="Inter, Arial, Helvetica, sans-serif" font-size="28" font-weight="800" fill="#ffffff">meme pool</text>
+      <text x="28" y="124" font-family="Inter, Arial, Helvetica, sans-serif" font-size="21" font-weight="620" fill="#b9d0cb">X Layer</text>
+      <text x="28" y="154" font-family="Inter, Arial, Helvetica, sans-serif" font-size="21" font-weight="620" fill="#b9d0cb">PoolManager</text>
+    </g>
+  </g>
+
+  <g transform="translate(78 620)">
+    <rect width="1444" height="132" rx="26" fill="#0a1d19" stroke="#294d46"/>
+    <text x="34" y="47" font-family="Inter, Arial, Helvetica, sans-serif" font-size="30" font-weight="820" fill="#ffffff">Policy stack enforced in the swap path</text>
+    <g transform="translate(34 72)">
+      <rect width="186" height="42" rx="21" fill="#102b26" stroke="#35e9c8" stroke-opacity="0.45"/>
+      <rect x="210" width="170" height="42" rx="21" fill="#102b26" stroke="#35e9c8" stroke-opacity="0.45"/>
+      <rect x="404" width="160" height="42" rx="21" fill="#f2a51f" fill-opacity="0.16" stroke="#f8b43b" stroke-opacity="0.55"/>
+      <rect x="588" width="150" height="42" rx="21" fill="#102b26" stroke="#35e9c8" stroke-opacity="0.45"/>
+      <rect x="762" width="176" height="42" rx="21" fill="#102b26" stroke="#35e9c8" stroke-opacity="0.45"/>
+      <rect x="962" width="204" height="42" rx="21" fill="#102b26" stroke="#35e9c8" stroke-opacity="0.45"/>
+      <text x="24" y="28" font-family="Inter, Arial, Helvetica, sans-serif" font-size="20" font-weight="760" fill="#eafffb">Dynamic fees</text>
+      <text x="234" y="28" font-family="Inter, Arial, Helvetica, sans-serif" font-size="20" font-weight="760" fill="#eafffb">Anti-snipe</text>
+      <text x="428" y="28" font-family="Inter, Arial, Helvetica, sans-serif" font-size="20" font-weight="760" fill="#ffd88a">Trade caps</text>
+      <text x="612" y="28" font-family="Inter, Arial, Helvetica, sans-serif" font-size="20" font-weight="760" fill="#eafffb">Cooldowns</text>
+      <text x="786" y="28" font-family="Inter, Arial, Helvetica, sans-serif" font-size="20" font-weight="760" fill="#eafffb">Access lists</text>
+      <text x="986" y="28" font-family="Inter, Arial, Helvetica, sans-serif" font-size="20" font-weight="760" fill="#eafffb">Emergency pause</text>
+    </g>
+  </g>
+
+  <g transform="translate(78 812)">
+    <text x="0" y="0" font-family="Inter, Arial, Helvetica, sans-serif" font-size="23" font-weight="740" fill="#ffffff">Live demo</text>
+    <text x="122" y="0" font-family="Inter, Arial, Helvetica, sans-serif" font-size="23" font-weight="640" fill="#86f5df">narrativeguard-hook.vercel.app</text>
+    <text x="0" y="42" font-family="Inter, Arial, Helvetica, sans-serif" font-size="20" font-weight="620" fill="#9fb9b3">Hook 0x86Ef...4080  |  PoolId 0x57c6...57bf1  |  GitHub NarrativeGuard/narrativeguard-hook</text>
+  </g>
+</svg>
