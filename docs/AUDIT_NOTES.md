@@ -15,7 +15,7 @@ This is an internal engineering review, not an independent third-party audit.
 ## Hardening Completed
 
 - Added strict zero-address checks for list accounts, trusted routers, and resolved traders.
-- Added exact `hookData` length validation for trusted router trader resolution.
+- Added trusted-router `hookData` validation that reads the first ABI-encoded address while allowing optional trailing router metadata.
 - Added launch-window overflow validation before storing pool config.
 - Added batch global and per-pool list setters for safer admin operations without changing swap-path complexity.
 - Preserved O(1) swap-path checks: pause, blacklist, whitelist, anti-snipe, max trade, cooldown, fee override.
@@ -35,12 +35,20 @@ This is an internal engineering review, not an independent third-party audit.
 
 - `riskOracle` is trusted. It can update risk scores and pause pools, so production deployments should use a multisig, timelocked admin, or signed-attestation oracle.
 - Trusted routers can identify the real trader through `hookData`. Only routers with audited encoding behavior should be trusted.
-- Trusted-router `hookData` is intentionally restricted to exactly one ABI-encoded address. This improves unambiguous trader attribution, but routers that need extra hook metadata must be adapted or added through a future versioned payload format.
+- Trusted-router `hookData` uses the first ABI-encoded address as the real trader. Routers may append metadata, but only audited routers should be marked trusted.
 - The whitelist intentionally bypasses anti-snipe, max-trade, and cooldown rules, but it does not bypass emergency pause or blacklist.
 - Unconfigured pools fail open. This avoids bricking pools accidentally attached to the Hook, but production operators should configure pools immediately after initialization.
 - The Hook screens swaps and can override LP fees for dynamic-fee pools. It does not manage liquidity, token minting, or offchain oracle aggregation.
 - Per-address cooldowns cannot stop a determined multi-wallet Sybil strategy by themselves. The intended layered defense is anti-snipe windows, trade caps, blacklist/allowlist operations, and future oracle/attestation scoring.
 
+## External Audit Triage
+
+An external AI review correctly identified that a later Hook address, `0x517D1fB0Fc551B4622fC8d2815502e7D2d370080`, has deployed code but is not configured for the current public PoolId. The repository therefore keeps the configured live demo at `0x86Ef9197Bde5Dd40352D0a58589b1772376B4080` as the frontend default instead of routing users to an unconfigured fail-open Hook.
+
+The same review flagged hardcoded activity transactions. The current frontend only falls back to the public configure/init transactions when the loaded Hook is the public deployment; fresh frontend deployments use the transaction hashes stored in React state.
+
+The cooldown Sybil limitation and oracle/owner centralization are design constraints, not one-line contract bugs. They are documented here and should be addressed with router attribution, attestation scoring, multisig/timelock administration, and production oracle design before significant TVL.
+
 ## Verification Note
 
-The X Layer deployment is a live reference deployment. The deployment flow can refresh public addresses from the current source if the submitted explorer bytecode must match the latest repository state exactly.
+The X Layer deployment is a configured live demo deployment. The verification script now checks code, transaction receipts, and that the submitted PoolId is enabled in the Hook config. The deployment flow can refresh public addresses from the current source if the submitted explorer bytecode must match the latest repository state exactly; after a refresh, the new Hook must also be configured and initialized before the frontend/docs are changed.

@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 
 import { network } from "hardhat";
-import { encodeAbiParameters, parseAbiParameters, zeroAddress, zeroHash } from "viem";
+import { concatHex, encodeAbiParameters, parseAbiParameters, zeroAddress, zeroHash } from "viem";
 
 const DYNAMIC_FEE_FLAG = 0x800000;
 const OVERRIDE_FEE_FLAG = 0x400000;
@@ -152,8 +152,11 @@ describe("NarrativeGuardHook", async function () {
     await hook.write.configurePool([key, config({ cooldownSeconds: 60 })]);
     await hook.write.setTrustedRouter([router.account.address, true]);
 
-    const hookData = encodeAbiParameters(parseAbiParameters("address"), [
-      trader.account.address,
+    const hookData = concatHex([
+      encodeAbiParameters(parseAbiParameters("address"), [
+        trader.account.address,
+      ]),
+      "0x12345678",
     ]);
 
     await manager.write.callBeforeSwap([

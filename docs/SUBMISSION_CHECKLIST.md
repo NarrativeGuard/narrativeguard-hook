@@ -49,13 +49,14 @@ Done:
 - Judging brief.
 - Demo video script.
 - Internal audit notes and expanded edge-case tests.
+- Dedicated project X account: `https://x.com/muememeda`.
+- Announcement post: `https://x.com/muememeda/status/2059590530041082083`.
 
 Still needed before final form:
 
-- Redeploy latest hardened source if you want explorer bytecode to match the current repository exactly.
-- Create project X account.
-- Post announcement thread tagging the required accounts.
+- Optional: redeploy latest hardened source if you want explorer bytecode to match the current repository exactly. Only update public addresses after the new Hook is configured and a matching v4 pool is initialized.
 - Record and upload Demo video.
+- Submit the official Google Form before the deadline.
 
 ## Final Form Data To Prepare
 

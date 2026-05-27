@@ -1,5 +1,21 @@
 # Tweet Copy
 
+## Posted Launch Thread
+
+Main post:
+
+```text
+https://x.com/muememeda/status/2059590530041082083
+```
+
+Deployment-address reply:
+
+```text
+https://x.com/muememeda/status/2059596943228276955
+```
+
+Use the configured live demo address below unless a fresh Hook is configured and paired with a newly initialized v4 pool before submission.
+
 ## English
 
 Building NarrativeGuard for OKX Web3 / X Layer Build X.

@@ -297,10 +297,18 @@ if (process.env.CONFIGURE_DEMO_POOL === "true") {
 }
 
 const explorer = explorerBaseUrl(chainId);
+const deploymentStatus =
+  configurePoolTx && initializePoolTx
+    ? "configured-live-demo"
+    : configurePoolTx
+      ? "configured-hook-pool-not-initialized"
+      : "hook-deployed-unconfigured";
 const deployment = {
   network: connection.networkName,
   chainId,
+  deploymentStatus,
   deployer: deployerAddress,
+  owner: deployerAddress,
   riskOracle,
   poolManager: poolManagerAddress,
   mockPoolManager: mockPoolManagerAddress,

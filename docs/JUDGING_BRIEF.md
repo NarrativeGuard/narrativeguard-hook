@@ -74,7 +74,7 @@ X Layer mainnet:
 - Configure policy tx: `0xc18e335fe8d88c5d472485140dc9aeb667d91e981f543073916633711c4adac0`
 - Initialize v4 pool tx: `0xaa1cb8472066987c4e5763faba214a69fe2450339abb340baef179ef71917a44`
 
-The deployment scripts can refresh the public addresses from the current source if the final verification workflow requires exact latest-source bytecode matching.
+The current public address is the configured live demo. Deployment scripts can refresh the public addresses from the current source if the final verification workflow requires exact latest-source bytecode matching, but the submitted address should only change after the new Hook is configured and its v4 pool is initialized.
 
 ## Demo Story
 

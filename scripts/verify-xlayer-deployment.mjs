@@ -10,6 +10,62 @@ const client = createPublicClient({
   transport: http(rpcUrl),
 });
 
+const hookAbi = [
+  {
+    type: "function",
+    name: "poolManager",
+    stateMutability: "view",
+    inputs: [],
+    outputs: [{ type: "address" }],
+  },
+  {
+    type: "function",
+    name: "owner",
+    stateMutability: "view",
+    inputs: [],
+    outputs: [{ type: "address" }],
+  },
+  {
+    type: "function",
+    name: "riskOracle",
+    stateMutability: "view",
+    inputs: [],
+    outputs: [{ type: "address" }],
+  },
+  {
+    type: "function",
+    name: "quoteFee",
+    stateMutability: "view",
+    inputs: [{ name: "poolId", type: "bytes32" }],
+    outputs: [{ type: "uint24" }],
+  },
+  {
+    type: "function",
+    name: "getConfig",
+    stateMutability: "view",
+    inputs: [{ name: "poolId", type: "bytes32" }],
+    outputs: [
+      {
+        name: "config",
+        type: "tuple",
+        components: [
+          { name: "enabled", type: "bool" },
+          { name: "paused", type: "bool" },
+          { name: "riskScoreBps", type: "uint16" },
+          { name: "antiSnipeRiskBps", type: "uint16" },
+          { name: "baseFeePips", type: "uint24" },
+          { name: "maxFeePips", type: "uint24" },
+          { name: "maxTradeSize", type: "uint128" },
+          { name: "cooldownSeconds", type: "uint32" },
+          { name: "antiSnipeSeconds", type: "uint32" },
+          { name: "launchTimestamp", type: "uint64" },
+          { name: "narrativeHash", type: "bytes32" },
+        ],
+      },
+    ],
+  },
+];
+
 function requireAddress(value, label) {
   if (!value) throw new Error(`${label} is missing from deployments/xlayerMainnet.json`);
   return getAddress(value);
@@ -28,6 +84,51 @@ async function checkReceipt(hash, label) {
   const receipt = await client.getTransactionReceipt({ hash });
   if (receipt.status !== "success") throw new Error(`${label} reverted: ${hash}`);
   console.log(`${label}: ${hash} (${receipt.status}, gas ${receipt.gasUsed})`);
+}
+
+async function readHook(functionName, args = []) {
+  return client.readContract({
+    address: requireAddress(deployment.hook, "hook"),
+    abi: hookAbi,
+    functionName,
+    args,
+  });
+}
+
+async function checkHookState() {
+  const expectedManager = requireAddress(deployment.poolManager, "poolManager");
+  const expectedOracle = deployment.riskOracle ? requireAddress(deployment.riskOracle, "riskOracle") : undefined;
+  const expectedOwner = deployment.owner
+    ? requireAddress(deployment.owner, "owner")
+    : deployment.deployer
+      ? requireAddress(deployment.deployer, "deployer")
+      : undefined;
+
+  const [manager, owner, oracle, config, quotedFee] = await Promise.all([
+    readHook("poolManager"),
+    readHook("owner"),
+    readHook("riskOracle"),
+    readHook("getConfig", [deployment.poolId]),
+    readHook("quoteFee", [deployment.poolId]),
+  ]);
+
+  if (getAddress(manager) !== expectedManager) {
+    throw new Error(`Hook PoolManager mismatch: expected ${expectedManager}, got ${manager}`);
+  }
+  if (expectedOracle && getAddress(oracle) !== expectedOracle) {
+    throw new Error(`Hook riskOracle mismatch: expected ${expectedOracle}, got ${oracle}`);
+  }
+  if (expectedOwner && getAddress(owner) !== expectedOwner) {
+    throw new Error(`Hook owner mismatch: expected ${expectedOwner}, got ${owner}`);
+  }
+
+  if (!config.enabled) {
+    throw new Error(`Hook config is disabled for PoolId ${deployment.poolId}`);
+  }
+
+  console.log(
+    `Hook config: enabled=${config.enabled}, paused=${config.paused}, riskScoreBps=${config.riskScoreBps}, quotedFeePips=${quotedFee}`,
+  );
 }
 
 const chainId = await client.getChainId();
@@ -55,4 +156,5 @@ if (!deployment.poolId) {
 }
 
 console.log(`PoolId: ${deployment.poolId}`);
+await checkHookState();
 console.log("Deployment verification passed.");

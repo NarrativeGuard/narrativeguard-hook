@@ -99,9 +99,9 @@ Advanced deployment and local signing workflows are documented in [docs/LOCAL_AU
 
 X Layer mainnet chain ID is `196`, RPC is `https://rpc.xlayer.tech`, and the explorer is `https://www.okx.com/web3/explorer/xlayer`. Source: https://web3.okx.com/xlayer/docs/developer/build-on-xlayer/network-information
 
-Current deployed addresses are recorded in [docs/XLAYER_MAINNET_DEPLOYMENT.md](docs/XLAYER_MAINNET_DEPLOYMENT.md).
+Current live demo addresses are recorded in [docs/XLAYER_MAINNET_DEPLOYMENT.md](docs/XLAYER_MAINNET_DEPLOYMENT.md). These addresses point to the configured X Layer Hook and initialized v4 PoolId used by the public console.
 
-Deployment scripts can refresh the public addresses from the current source if a final source-verification workflow requires a fresh deployment.
+If the source is redeployed for final bytecode/source alignment, update the frontend and docs only after the new Hook has also been configured and a v4 pool has been initialized.
 
 Hook:
 
@@ -176,7 +176,7 @@ This repository has internal hardening notes in [docs/AUDIT_NOTES.md](docs/AUDIT
 
 - The risk oracle can update scores and pause pools.
 - Owner can configure pools and lists.
-- Trusted routers may pass the real trader through exactly one ABI-encoded `address` in `hookData`; untrusted senders are treated as the trader.
+- Trusted routers may pass the real trader as the first ABI-encoded `address` in `hookData`; optional trailing router metadata is ignored. Untrusted senders are treated as the trader.
 - Blacklist takes precedence over whitelist. Whitelist bypasses anti-snipe, max-trade, and cooldown checks, but not emergency pause.
 - Dynamic LP fee override only applies when the pool fee is `LPFeeLibrary.DYNAMIC_FEE_FLAG`.
 - Unconfigured pools fail open to avoid accidental pool bricking.

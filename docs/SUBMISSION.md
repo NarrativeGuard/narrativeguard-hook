@@ -50,6 +50,8 @@ PoolManager:
 0x360E68faCcca8cA495c1B759Fd9EEe466db9FB32
 ```
 
+Deployment status: configured live demo. Use these addresses for the public demo and submission unless a fresh Hook is also configured and paired with a newly initialized v4 pool before the final form is submitted.
+
 Initialize pool tx:
 
 ```text
@@ -107,7 +109,7 @@ Meme launches are high-frequency, social-driven, and attack-prone. Pools that ca
 
 Completeness:
 
-The current implementation includes contracts, tests, deployment scripts, a bilingual wallet-connected Risk OS console, submission materials, and a deployed X Layer mainnet Hook plus initialized v4 pool. The frontend can load the current deployment, read live policy, update narrative risk score, pause/resume the pool, read activity, and deploy a fresh demo through wallet confirmations. The deployment scripts can refresh addresses from the current source if the final verification workflow requires exact source-to-bytecode matching.
+The current implementation includes contracts, tests, deployment scripts, a bilingual wallet-connected Risk OS console, submission materials, and a deployed X Layer mainnet Hook plus initialized v4 pool. The frontend can load the current configured deployment, read live policy, update narrative risk score, pause/resume the pool, read activity, and deploy a fresh demo through wallet confirmations. If a final source-refresh deployment is made, the submitted address should only be changed after `configurePool` and pool initialization both succeed.
 
 ## X Layer Fit
 

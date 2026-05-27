@@ -48,6 +48,8 @@ deployments/xlayerMainnet.json
 
 Share only that public JSON output or public explorer links with collaborators. Never share `.env`.
 
+Only promote a new Hook address to README, the frontend current-deployment constants, or hackathon submission material after the script has also configured the Hook policy and initialized the matching v4 pool. A Hook with code but no configured PoolId is fail-open and is not a complete public demo.
+
 To re-check an existing public deployment without signing anything:
 
 ```bash

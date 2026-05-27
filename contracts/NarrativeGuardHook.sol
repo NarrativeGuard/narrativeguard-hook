@@ -352,8 +352,13 @@ contract NarrativeGuardHook is BaseHook, Ownable {
 
     function _resolveTrader(address sender, bytes calldata hookData) internal view returns (address) {
         if (trustedRouter[sender]) {
-            if (hookData.length != 32) revert InvalidHookData(sender, hookData.length);
-            address trader = abi.decode(hookData, (address));
+            if (hookData.length < 32) revert InvalidHookData(sender, hookData.length);
+            bytes32 traderWord;
+            assembly {
+                traderWord := calldataload(hookData.offset)
+            }
+            if (uint256(traderWord) >> 160 != 0) revert InvalidHookData(sender, hookData.length);
+            address trader = address(uint160(uint256(traderWord)));
             if (trader == address(0)) revert InvalidAccount();
             return trader;
         }

@@ -24,7 +24,7 @@ Passing tests cover:
 - cooldown enforcement;
 - anti-snipe launch window;
 - whitelist bypass;
-- trusted-router `hookData`;
+- trusted-router `hookData`, including trailing router metadata;
 - oracle score update;
 - emergency pause;
 - config validation;
@@ -70,12 +70,14 @@ No horizontal page overflow or button text overflow was detected in these viewpo
 - X Layer public RPC event scanning can return an invalid-parameters response for event logs. The activity panel now treats this as an indexer-readiness state: it still verifies code and transaction receipts, shows transaction rows, and avoids presenting the fallback as a user-facing failure.
 - Activity history previously depended on the first public deployment's hardcoded configure/init transaction hashes. It now tracks the active frontend deployment transaction hashes and uses the hardcoded hashes only when the current public deployment is selected.
 - Frontend write calls now include explicit gas limits for demo token deployment, Hook policy configuration, v4 pool initialization, risk-score updates, and emergency pause/resume calls.
+- Trusted-router `hookData` previously required exactly one encoded address. It now reads the first encoded address and allows trailing router metadata while rejecting short, non-canonical, or zero-address data.
 
 ## Before Production TVL
 
 Before production TVL, complete:
 
 - source-verification refresh if exact bytecode/source matching is required;
+- after any source-refresh deployment, configure the new Hook and initialize a matching v4 pool before updating public addresses;
 - wallet-signed writes are tested manually with the intended owner/oracle wallet;
 - a real oracle/multisig operational setup is added;
 - an independent third-party security audit is completed.

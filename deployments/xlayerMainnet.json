@@ -1,7 +1,9 @@
 {
   "network": "xlayerMainnet",
   "chainId": 196,
+  "deploymentStatus": "configured-live-demo",
   "deployer": "0xd87b33516ecb2ce135c1f99f5b5c8ec67cf235c4",
+  "owner": "0xd87b33516ecb2ce135c1f99f5b5c8ec67cf235c4",
   "riskOracle": "0xd87b33516ecb2ce135c1f99f5b5c8ec67cf235c4",
   "poolManager": "0x360E68faCcca8cA495c1B759Fd9EEe466db9FB32",
   "hook": "0x86Ef9197Bde5Dd40352D0a58589b1772376B4080",
@@ -14,5 +16,8 @@
   "poolId": "0x57c6a64160f4f9fc82d32432ab6f242b52f28159e6ed882b024ebdf3ebf57bf1",
   "configurePoolTx": "0xc18e335fe8d88c5d472485140dc9aeb667d91e981f543073916633711c4adac0",
   "initializePoolTx": "0xaa1cb8472066987c4e5763faba214a69fe2450339abb340baef179ef71917a44",
+  "hardenedCandidateHook": "0x517D1fB0Fc551B4622fC8d2815502e7D2d370080",
+  "hardenedCandidateDeployTx": "0xb08cbe287cb2e4e7a755a01aa94d1825f33773432e5e68afd909910bea7b48b3",
+  "hardenedCandidateStatus": "deployed-code-present-unconfigured-not-current-demo",
   "timestamp": "2026-05-26T04:40:24.868Z"
 }

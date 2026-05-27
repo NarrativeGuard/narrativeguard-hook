@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">NarrativeGuard launch card</title>
+  <desc id="desc">A launch card for NarrativeGuard, X Layer Meme Launch Risk OS powered by Uniswap v4 Hooks.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#07110f"/>
+      <stop offset="0.48" stop-color="#0d1b18"/>
+      <stop offset="1" stop-color="#04100e"/>
+    </linearGradient>
+    <linearGradient id="mint" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#b9fff0"/>
+      <stop offset="0.55" stop-color="#29dfbd"/>
+      <stop offset="1" stop-color="#0d7f70"/>
+    </linearGradient>
+    <linearGradient id="amber" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffd58a"/>
+      <stop offset="1" stop-color="#d88408"/>
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="14" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0.11 0 0 0 0 0.93 0 0 0 0 0.75 0 0 0 0.55 0"/>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <pattern id="grid" width="56" height="56" patternUnits="userSpaceOnUse">
+      <path d="M56 0H0V56" fill="none" stroke="#7fffea" stroke-opacity="0.07" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <rect width="1600" height="900" fill="url(#grid)"/>
+  <path d="M0 720C230 640 350 655 560 565C780 470 905 350 1135 390C1330 424 1450 525 1600 485V900H0Z" fill="#0bb99d" opacity="0.08"/>
+  <path d="M-60 620C205 500 370 565 620 455C840 358 970 250 1215 315C1375 358 1475 420 1660 370" fill="none" stroke="#3ef4d0" stroke-width="5" stroke-opacity="0.28"/>
+  <path d="M-30 680C235 590 390 612 650 505C895 405 1010 335 1240 380C1410 414 1480 475 1635 455" fill="none" stroke="#f4a018" stroke-width="4" stroke-opacity="0.24"/>
+
+  <g transform="translate(1085 175)" filter="url(#glow)">
+    <path d="M190 0L342 62V218C342 352 271 451 190 512C109 451 38 352 38 218V62L190 0Z" fill="#07110f" stroke="url(#mint)" stroke-width="14"/>
+    <path d="M190 38L300 84V218C300 323 249 399 190 451C131 399 80 323 80 218V84L190 38Z" fill="#0d1b18" stroke="#dffff8" stroke-opacity="0.65" stroke-width="5"/>
+    <path d="M191 98V286C191 356 136 368 111 325C93 293 109 257 142 246" fill="none" stroke="url(#mint)" stroke-width="44" stroke-linecap="round"/>
+    <circle cx="191" cy="93" r="32" fill="#dffff8"/>
+    <circle cx="191" cy="93" r="15" fill="#07110f"/>
+    <path d="M86 297H132L169 265L214 318L255 270L294 306" fill="none" stroke="#3ef4d0" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M188 374L188 418" stroke="url(#amber)" stroke-width="14" stroke-linecap="round"/>
+    <circle cx="188" cy="445" r="9" fill="#ffc24b"/>
+  </g>
+
+  <g transform="translate(88 110)">
+    <rect x="0" y="0" width="820" height="56" rx="28" fill="#0e2521" stroke="#35e9c8" stroke-opacity="0.35"/>
+    <text x="28" y="37" font-family="Inter, Arial, Helvetica, sans-serif" font-size="24" font-weight="700" fill="#b9fff0">OKX Web3 / X Layer Build X Hackathon</text>
+
+    <text x="0" y="164" font-family="Inter, Arial, Helvetica, sans-serif" font-size="82" font-weight="850" letter-spacing="0" fill="#f7fffb">NarrativeGuard</text>
+    <text x="0" y="226" font-family="Inter, Arial, Helvetica, sans-serif" font-size="42" font-weight="760" letter-spacing="0" fill="#86f5df">X Layer Meme Launch Risk OS</text>
+    <text x="0" y="288" font-family="Inter, Arial, Helvetica, sans-serif" font-size="30" font-weight="520" fill="#d6e8e4">A Uniswap v4 beforeSwap Hook that turns narrative risk</text>
+    <text x="0" y="330" font-family="Inter, Arial, Helvetica, sans-serif" font-size="30" font-weight="520" fill="#d6e8e4">into onchain trading protection for meme pools.</text>
+
+    <g transform="translate(0 390)">
+      <rect width="265" height="64" rx="14" fill="#102b26" stroke="#2ee9c7" stroke-opacity="0.4"/>
+      <rect x="292" width="245" height="64" rx="14" fill="#102b26" stroke="#2ee9c7" stroke-opacity="0.4"/>
+      <rect x="564" width="245" height="64" rx="14" fill="#102b26" stroke="#2ee9c7" stroke-opacity="0.4"/>
+      <text x="28" y="41" font-family="Inter, Arial, Helvetica, sans-serif" font-size="24" font-weight="720" fill="#ffffff">Dynamic fees</text>
+      <text x="320" y="41" font-family="Inter, Arial, Helvetica, sans-serif" font-size="24" font-weight="720" fill="#ffffff">Anti-snipe</text>
+      <text x="592" y="41" font-family="Inter, Arial, Helvetica, sans-serif" font-size="24" font-weight="720" fill="#ffffff">Emergency pause</text>
+    </g>
+
+    <g transform="translate(0 488)">
+      <rect width="232" height="58" rx="29" fill="#f2a51f" fill-opacity="0.16" stroke="#f8b43b" stroke-opacity="0.6"/>
+      <rect x="254" width="206" height="58" rx="29" fill="#0f2924" stroke="#35e9c8" stroke-opacity="0.38"/>
+      <rect x="482" width="248" height="58" rx="29" fill="#0f2924" stroke="#35e9c8" stroke-opacity="0.38"/>
+      <text x="28" y="37" font-family="Inter, Arial, Helvetica, sans-serif" font-size="22" font-weight="740" fill="#ffd58a">Trade caps</text>
+      <text x="282" y="37" font-family="Inter, Arial, Helvetica, sans-serif" font-size="22" font-weight="740" fill="#d9fff6">Cooldowns</text>
+      <text x="510" y="37" font-family="Inter, Arial, Helvetica, sans-serif" font-size="22" font-weight="740" fill="#d9fff6">Lists + oracle</text>
+    </g>
+  </g>
+
+  <g transform="translate(88 790)">
+    <text x="0" y="0" font-family="Inter, Arial, Helvetica, sans-serif" font-size="24" font-weight="700" fill="#ffffff">Live demo</text>
+    <text x="132" y="0" font-family="Inter, Arial, Helvetica, sans-serif" font-size="24" font-weight="620" fill="#86f5df">narrativeguard-hook.vercel.app</text>
+    <text x="0" y="44" font-family="Inter, Arial, Helvetica, sans-serif" font-size="21" font-weight="620" fill="#9fb9b3">Hook 0x86Ef...4080  |  PoolId 0x57c6...57bf1  |  GitHub NarrativeGuard/narrativeguard-hook</text>
+  </g>
+</svg>
