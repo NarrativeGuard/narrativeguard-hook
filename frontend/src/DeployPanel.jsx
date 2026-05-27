@@ -84,13 +84,13 @@ const chains = {
 
 const CURRENT_XLAYER_DEPLOYMENT = {
   poolManager: "0x360E68faCcca8cA495c1B759Fd9EEe466db9FB32",
-  hook: "0x86Ef9197Bde5Dd40352D0a58589b1772376B4080",
+  hook: "0xAa242C1c9Dac355D6a66eA165E3Dfa96D0924080",
   demoToken0: "0x6213da9f111e2768fed4bf4875fa50001b7304ff",
   demoToken1: "0xb23f8a79e29113dc41e41cc75261713e5ffb1f0e",
-  poolId: "0x57c6a64160f4f9fc82d32432ab6f242b52f28159e6ed882b024ebdf3ebf57bf1",
+  poolId: "0xa9e01de25bcd4f5917afcfbb2b5728a1dfd392d360e7c9d7cefe10d4465dc893",
   riskOracle: "0xd87b33516ecb2ce135c1f99f5b5c8ec67cf235c4",
-  configurePoolTx: "0xc18e335fe8d88c5d472485140dc9aeb667d91e981f543073916633711c4adac0",
-  initializePoolTx: "0xaa1cb8472066987c4e5763faba214a69fe2450339abb340baef179ef71917a44",
+  configurePoolTx: "0x3212e9c6f91ffd770bceff07207446b279c0e8c3dd30d7d78c212b5548b84c15",
+  initializePoolTx: "0xddf9684b8e64829b56836322d3a0c8acaedb2c0c7545d3eb3db49e2a281313a1",
 };
 
 function shortAddress(address) {

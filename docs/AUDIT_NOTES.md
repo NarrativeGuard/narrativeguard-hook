@@ -43,7 +43,7 @@ This is an internal engineering review, not an independent third-party audit.
 
 ## External Audit Triage
 
-An external AI review correctly identified that a later Hook address, `0x517D1fB0Fc551B4622fC8d2815502e7D2d370080`, has deployed code but is not configured for the current public PoolId. The repository therefore keeps the configured live demo at `0x86Ef9197Bde5Dd40352D0a58589b1772376B4080` as the frontend default instead of routing users to an unconfigured fail-open Hook.
+An external AI review correctly identified that an earlier candidate Hook address, `0x517D1fB0Fc551B4622fC8d2815502e7D2d370080`, had deployed code but was not configured for the public PoolId. A refreshed Hook deployment is now configured and initialized at `0xAa242C1c9Dac355D6a66eA165E3Dfa96D0924080`, and the frontend default points to that enabled deployment.
 
 The same review flagged hardcoded activity transactions. The current frontend only falls back to the public configure/init transactions when the loaded Hook is the public deployment; fresh frontend deployments use the transaction hashes stored in React state.
 

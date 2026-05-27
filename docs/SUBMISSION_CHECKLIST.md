@@ -8,10 +8,10 @@ Deadline: **2026-05-28 23:59 UTC** / **2026-05-29 07:59 Asia/Shanghai**.
 
 - Uniswap v4 Hook project built during the hackathon period.
 - New Hook contract logic in this repository.
-- Hook contract deployed on X Layer mainnet: `0x86Ef9197Bde5Dd40352D0a58589b1772376B4080`.
+- Hook contract deployed on X Layer mainnet: `0xAa242C1c9Dac355D6a66eA165E3Dfa96D0924080`.
 - V4 Pool initialized on X Layer mainnet PoolManager.
 - Verifiable Hook contract address.
-- Verifiable V4 PoolId: `0x57c6a64160f4f9fc82d32432ab6f242b52f28159e6ed882b024ebdf3ebf57bf1`.
+- Verifiable V4 PoolId: `0xa9e01de25bcd4f5917afcfbb2b5728a1dfd392d360e7c9d7cefe10d4465dc893`.
 - Project repository link: `https://github.com/NarrativeGuard/narrativeguard-hook`.
 - Public Risk OS demo URL: `https://narrativeguard-hook.vercel.app`.
 - Dedicated X account for the project.

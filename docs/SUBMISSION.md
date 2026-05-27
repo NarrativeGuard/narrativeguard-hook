@@ -35,13 +35,13 @@ https://github.com/NarrativeGuard/narrativeguard-hook
 Hook:
 
 ```text
-0x86Ef9197Bde5Dd40352D0a58589b1772376B4080
+0xAa242C1c9Dac355D6a66eA165E3Dfa96D0924080
 ```
 
 V4 PoolId:
 
 ```text
-0x57c6a64160f4f9fc82d32432ab6f242b52f28159e6ed882b024ebdf3ebf57bf1
+0xa9e01de25bcd4f5917afcfbb2b5728a1dfd392d360e7c9d7cefe10d4465dc893
 ```
 
 PoolManager:
@@ -55,7 +55,7 @@ Deployment status: configured live demo. Use these addresses for the public demo
 Initialize pool tx:
 
 ```text
-0xaa1cb8472066987c4e5763faba214a69fe2450339abb340baef179ef71917a44
+0xddf9684b8e64829b56836322d3a0c8acaedb2c0c7545d3eb3db49e2a281313a1
 ```
 
 Full deployment notes: [XLAYER_MAINNET_DEPLOYMENT.md](XLAYER_MAINNET_DEPLOYMENT.md)

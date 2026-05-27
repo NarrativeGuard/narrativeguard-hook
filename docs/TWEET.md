@@ -34,8 +34,8 @@ Hook the Future on X Layer.
 
 @XLayerOfficial @Uniswap @flapdotsh
 
-Hook: 0x86Ef9197Bde5Dd40352D0a58589b1772376B4080
-PoolId: 0x57c6a64160f4f9fc82d32432ab6f242b52f28159e6ed882b024ebdf3ebf57bf1
+Hook: 0xAa242C1c9Dac355D6a66eA165E3Dfa96D0924080
+PoolId: 0xa9e01de25bcd4f5917afcfbb2b5728a1dfd392d360e7c9d7cefe10d4465dc893
 
 ## English Thread
 
@@ -58,8 +58,42 @@ Meme pools move at narrative speed. NarrativeGuard turns offchain risk signals i
 
 4/ The goal: help meme projects launch with better market structure while keeping swaps open, auditable, and composable through Uniswap v4.
 
-Hook: 0x86Ef9197Bde5Dd40352D0a58589b1772376B4080
-PoolId: 0x57c6a64160f4f9fc82d32432ab6f242b52f28159e6ed882b024ebdf3ebf57bf1
+Hook: 0xAa242C1c9Dac355D6a66eA165E3Dfa96D0924080
+PoolId: 0xa9e01de25bcd4f5917afcfbb2b5728a1dfd392d360e7c9d7cefe10d4465dc893
+
+## Second Technical Post
+
+Use with `assets/social/narrativeguard-architecture-card.png`.
+
+```text
+Under the hood, NarrativeGuard is a risk pipeline for meme launches:
+
+Narrative signals -> oracle score/hash -> Uniswap v4 beforeSwap Hook -> protected pool policy.
+
+Risk becomes dynamic fees, anti-snipe, caps, cooldowns, access lists and pause.
+
+Built on X Layer.
+```
+
+Optional reply:
+
+```text
+What this means in practice:
+
+When narrative risk rises, LP fees can rise with it. Launch-window snipes can be blocked. Large single trades can be capped. Repeat flow can be cooled down. Known market makers can be allowlisted, while hostile wallets can be blocked.
+```
+
+Optional deployment reply:
+
+```text
+Fresh X Layer verification:
+
+Hook: 0xAa242C1c9Dac355D6a66eA165E3Dfa96D0924080
+PoolId: 0xa9e01de25bcd4f5917afcfbb2b5728a1dfd392d360e7c9d7cefe10d4465dc893
+
+Demo: narrativeguard-hook.vercel.app
+GitHub: github.com/NarrativeGuard/narrativeguard-hook
+```
 
 ## Chinese
 
@@ -73,8 +107,8 @@ PoolId: 0x57c6a64160f4f9fc82d32432ab6f242b52f28159e6ed882b024ebdf3ebf57bf1
 
 @XLayerOfficial @Uniswap @flapdotsh
 
-Hook: 0x86Ef9197Bde5Dd40352D0a58589b1772376B4080
-PoolId: 0x57c6a64160f4f9fc82d32432ab6f242b52f28159e6ed882b024ebdf3ebf57bf1
+Hook: 0xAa242C1c9Dac355D6a66eA165E3Dfa96D0924080
+PoolId: 0xa9e01de25bcd4f5917afcfbb2b5728a1dfd392d360e7c9d7cefe10d4465dc893
 
 ## Chinese Thread
 
@@ -92,5 +126,5 @@ Meme 池的风险往往先出现在叙事层：社媒热度、KOL 轮动、新�
 
 4/ 目标是让 Meme 项目拥有更好的发行和交易保护，同时保留 Uniswap v4 的开放、可组合、可验证体验。
 
-Hook: 0x86Ef9197Bde5Dd40352D0a58589b1772376B4080
-PoolId: 0x57c6a64160f4f9fc82d32432ab6f242b52f28159e6ed882b024ebdf3ebf57bf1
+Hook: 0xAa242C1c9Dac355D6a66eA165E3Dfa96D0924080
+PoolId: 0xa9e01de25bcd4f5917afcfbb2b5728a1dfd392d360e7c9d7cefe10d4465dc893
