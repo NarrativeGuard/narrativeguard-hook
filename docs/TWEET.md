@@ -95,6 +95,23 @@ Demo: narrativeguard-hook.vercel.app
 GitHub: github.com/NarrativeGuard/narrativeguard-hook
 ```
 
+## Trust Boundary Follow-Up
+
+Use this as a follow-up post if the access-control surface needs to be clarified.
+
+```text
+Important trust boundary for NarrativeGuard:
+
+It is not a token-control system. It cannot mint, burn, seize, freeze, or transfer user assets.
+
+The Hook only applies opt-in, pool-level swap-path guardrails to a configured Uniswap v4 pool.
+
+Emergency pause = pool circuit breaker, not account freeze.
+Access lists = transparent routing policy, not custody.
+
+Production governance should use multisig/timelock or signed oracle attestations.
+```
+
 ## Chinese
 
 我在做 NarrativeGuard，参加 OKX Web3 / X Layer Build X。

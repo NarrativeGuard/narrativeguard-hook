@@ -9,6 +9,19 @@ NarrativeGuard is a Hook-powered risk operating system for meme launches on X La
 
 Built for **OKX Web3 / X Layer Build X Hackathon: Hook the Future**.
 
+## Trust Boundary
+
+NarrativeGuard is **not** a token-control system. It cannot mint, burn, seize, freeze, or transfer user assets, and it does not change ERC20 wallet balances or token transferability.
+
+The Hook only applies transparent, opt-in, pool-level guardrails to swaps routed through a configured Uniswap v4 pool that has chosen to use this Hook. Users can still hold their tokens, transfer them normally, and use other venues or pools that do not include NarrativeGuard.
+
+The intended production model is governance-limited risk defense:
+
+- pool-level swap screening, not wallet custody or token ownership control;
+- public onchain events for score updates, access-list changes, and circuit-breaker state;
+- multisig, timelock, or signed-attestation oracle control before meaningful TVL;
+- emergency pause as a pool circuit breaker for severe launch risk, not an account freeze.
+
 ## Links
 
 | Resource | URL |
@@ -174,6 +187,9 @@ Block order:
 
 This repository has internal hardening notes in [docs/AUDIT_NOTES.md](docs/AUDIT_NOTES.md). Independent third-party review is recommended before production TVL.
 
+- NarrativeGuard does not manage token balances, token minting, token burning, token transfers, or user custody.
+- Hook protections are scoped to configured Uniswap v4 pools that opt into the Hook.
+- Emergency pause is a pool-level swap-path circuit breaker, not a token freeze.
 - The risk oracle can update scores and pause pools.
 - Owner can configure pools and lists.
 - Trusted routers may pass the real trader as the first ABI-encoded `address` in `hookData`; optional trailing router metadata is ignored. Untrusted senders are treated as the trader.

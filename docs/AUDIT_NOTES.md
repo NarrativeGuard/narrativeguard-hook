@@ -33,6 +33,8 @@ This is an internal engineering review, not an independent third-party audit.
 
 ## Current Design Constraints
 
+- Trust boundary: the Hook screens swaps for configured Uniswap v4 pools only. It does not custody user assets, does not manage ERC20 transferability, and cannot mint, burn, seize, freeze, or transfer user tokens.
+- Access lists and emergency pause are pool-level swap-path controls. Production deployments should present them as transparent circuit-breaker and routing-policy tools, not as discretionary token ownership controls.
 - `riskOracle` is trusted. It can update risk scores and pause pools, so production deployments should use a multisig, timelocked admin, or signed-attestation oracle.
 - Trusted routers can identify the real trader through `hookData`. Only routers with audited encoding behavior should be trusted.
 - Trusted-router `hookData` uses the first ABI-encoded address as the real trader. Routers may append metadata, but only audited routers should be marked trusted.
@@ -47,7 +49,7 @@ An external AI review correctly identified that an earlier candidate Hook addres
 
 The same review flagged hardcoded activity transactions. The current frontend only falls back to the public configure/init transactions when the loaded Hook is the public deployment; fresh frontend deployments use the transaction hashes stored in React state.
 
-The cooldown Sybil limitation and oracle/owner centralization are design constraints, not one-line contract bugs. They are documented here and should be addressed with router attribution, attestation scoring, multisig/timelock administration, and production oracle design before significant TVL.
+The cooldown Sybil limitation and oracle/owner centralization are design constraints, not one-line contract bugs. They are documented here and should be addressed with router attribution, attestation scoring, multisig/timelock administration, public event monitoring, and production oracle design before significant TVL.
 
 ## Verification Note
 

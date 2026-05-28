@@ -77,6 +77,8 @@ Before each swap, the hook can:
 - honor whitelist/blacklist decisions;
 - emergency-pause the pool through owner/oracle controls.
 
+Trust boundary: NarrativeGuard does not control token balances, user wallets, ERC20 transfers, minting, or burning. It only applies transparent, opt-in, pool-level swap-path policy to a configured Uniswap v4 pool. Users can still hold and transfer tokens normally, and production deployments should put oracle/owner powers behind multisig, timelock, or signed-attestation governance.
+
 The product console adds:
 
 - Launch Shield templates for fair launch, viral spike, and emergency defense modes;

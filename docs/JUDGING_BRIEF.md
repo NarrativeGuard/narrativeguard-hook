@@ -4,6 +4,8 @@
 
 NarrativeGuard is **X Layer Meme Launch Risk OS**: a protocol console for launching, monitoring, and defending meme-token pools with a Uniswap v4 `beforeSwap` Hook.
 
+Important trust boundary: NarrativeGuard is not a token-control system. It cannot mint, burn, seize, freeze, or transfer user assets. Its control surface is limited to transparent, opt-in swap-path guardrails for Uniswap v4 pools that choose to use the Hook.
+
 The project is intentionally bigger than a single protection rule. It combines:
 
 - onchain enforcement through a deployed v4 Hook;
@@ -29,8 +31,8 @@ NarrativeGuard uses the v4 Hook layer as a programmable market-structure engine.
 - anti-snipe blocking during launch windows;
 - single-trade caps for large hostile orders;
 - cooldowns for repeated flow;
-- whitelist/blacklist controls for market makers and known attackers;
-- emergency pause for severe narrative breaks.
+- access-list controls for market makers and known attackers;
+- emergency pause as a pool-level circuit breaker for severe narrative breaks.
 
 The key idea: meme markets move through narrative first, then price. NarrativeGuard connects that earlier signal layer to `beforeSwap`.
 
@@ -47,6 +49,8 @@ Real demand:
 - X Layer benefits from consumer-grade trading activity that is cheaper, faster, and easier to demonstrate.
 
 This creates a believable path from hackathon demo to protocol product: every new meme launch can become a protected pool managed through the Risk OS.
+
+The product is designed to keep this protection auditable: policy updates are onchain events, the pool must opt into the Hook, and production governance should use multisig, timelock, or signed-attestation oracle controls before meaningful TVL.
 
 ## Completion
 
