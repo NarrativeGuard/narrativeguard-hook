@@ -527,6 +527,28 @@ button {
   align-items: center;
 }
 
+.command-panel .os-risk-board {
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.command-panel .risk-ring {
+  width: clamp(168px, 14vw, 210px);
+  flex-basis: clamp(168px, 14vw, 210px);
+  align-self: center;
+}
+
+.command-panel .decision-pill {
+  width: 100%;
+  justify-content: flex-start;
+}
+
+.command-panel .fee-stack {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
 .protection-readout {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -1297,7 +1319,330 @@ input[type="range"] {
   gap: 10px;
 }
 
+/* V3 protocol-console layer: dense, judge-facing, and product-shaped. */
+body {
+  background:
+    radial-gradient(circle at 12% 0%, rgba(28, 221, 178, 0.12), transparent 34rem),
+    radial-gradient(circle at 82% 18%, rgba(203, 142, 31, 0.12), transparent 28rem),
+    linear-gradient(180deg, #071311 0%, #0a1513 38%, #eef5f1 38%, #f4f7f4 100%);
+}
+
+.risk-os-shell {
+  max-width: 1560px;
+}
+
+.os-topbar {
+  border-color: rgba(126, 231, 199, 0.24);
+  background:
+    linear-gradient(90deg, rgba(9, 25, 22, 0.94), rgba(14, 35, 31, 0.9)),
+    #071311;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.22);
+}
+
+.os-topbar h1,
+.os-topbar .language-select,
+.os-topbar .icon-action {
+  color: #f0fff9;
+}
+
+.os-topbar .brand-mark {
+  color: #041411;
+  background: linear-gradient(135deg, #8df6d8, #15c6a5);
+  border-color: rgba(141, 246, 216, 0.8);
+  box-shadow: 0 0 32px rgba(21, 198, 165, 0.26);
+}
+
+.os-topbar .meta-row span {
+  color: #bcddd2;
+  background: rgba(113, 232, 195, 0.11);
+  border-color: rgba(113, 232, 195, 0.24);
+}
+
+.os-topbar .language-select,
+.os-topbar .icon-action {
+  border-color: rgba(113, 232, 195, 0.24);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.os-hero {
+  min-height: 220px;
+  position: relative;
+  overflow: hidden;
+  border-color: rgba(113, 232, 195, 0.22);
+  background:
+    linear-gradient(90deg, rgba(7, 19, 17, 0.96), rgba(12, 45, 39, 0.9)),
+    #071311;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.24);
+}
+
+.os-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(rgba(113, 232, 195, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(113, 232, 195, 0.045) 1px, transparent 1px);
+  background-size: 34px 34px;
+  mask-image: linear-gradient(90deg, rgba(0, 0, 0, 0.7), transparent 82%);
+}
+
+.os-hero h2 {
+  color: #f2fff9;
+  font-size: clamp(2rem, 3vw, 3.3rem);
+  max-width: 930px;
+}
+
+.os-hero p:not(.eyebrow) {
+  color: #bcddd2;
+  max-width: 790px;
+}
+
+.os-hero .eyebrow {
+  color: #8df6d8;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.hero-status-row span,
+.hero-metric {
+  color: #bedbd2;
+  border-color: rgba(113, 232, 195, 0.2);
+  background: rgba(255, 255, 255, 0.055);
+  backdrop-filter: blur(12px);
+}
+
+.hero-status-row strong,
+.hero-metric strong {
+  color: #f2fff9;
+}
+
+.command-layout {
+  display: grid;
+  grid-template-columns: minmax(250px, 0.78fr) minmax(650px, 1.9fr) minmax(320px, 0.98fr);
+  gap: 16px;
+  margin-top: 16px;
+  align-items: start;
+}
+
+.left-rail,
+.right-rail,
+.console-main {
+  display: grid;
+  gap: 16px;
+  min-width: 0;
+}
+
+.command-layout .panel {
+  border-color: rgba(18, 72, 61, 0.14);
+  background: rgba(255, 255, 252, 0.98);
+}
+
+.console-ops {
+  overflow: hidden;
+  border-color: rgba(113, 232, 195, 0.22) !important;
+  background:
+    linear-gradient(90deg, rgba(10, 41, 35, 0.98), rgba(8, 22, 20, 0.96)),
+    #071311 !important;
+}
+
+.console-ops .panel-heading {
+  color: #f2fff9;
+  border-bottom-color: rgba(113, 232, 195, 0.18);
+}
+
+.console-ops .eyebrow,
+.console-ops .ops-mode span,
+.console-ops .queue-chip span {
+  color: #9dcabe;
+}
+
+.console-ops .ops-mode,
+.console-ops .queue-chip {
+  border-color: rgba(113, 232, 195, 0.18);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.console-ops .ops-mode strong {
+  color: #f2fff9;
+}
+
+.console-ops .queue-chip strong {
+  color: #d3eee5;
+}
+
+.console-grid {
+  grid-template-columns: minmax(360px, 1.26fr) minmax(280px, 0.9fr);
+  grid-template-areas:
+    "command oracle"
+    "launch trader"
+    "policy policy";
+  margin-top: 0;
+}
+
+.market-list,
+.evidence-list {
+  display: grid;
+  gap: 10px;
+  padding: 0 16px 16px;
+}
+
+.market-card {
+  width: 100%;
+  min-height: 76px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px 12px;
+  align-items: center;
+  padding: 12px;
+  border: 1px solid #dce5e1;
+  border-radius: 8px;
+  color: #263531;
+  background: #f7faf8;
+  text-align: left;
+}
+
+.market-card span,
+.market-card strong,
+.market-card small,
+.market-card em,
+.market-card b {
+  min-width: 0;
+}
+
+.market-card strong,
+.market-card small {
+  display: block;
+}
+
+.market-card small {
+  margin-top: 4px;
+  color: #68716c;
+  font-size: 0.78rem;
+}
+
+.market-card em {
+  color: #0b594e;
+  font-style: normal;
+  font-size: 1.45rem;
+  font-weight: 800;
+}
+
+.market-card b {
+  grid-column: 1 / -1;
+  justify-self: start;
+  padding: 4px 8px;
+  border-radius: 999px;
+  color: #0b594e;
+  background: #e8f6f1;
+  font-size: 0.74rem;
+}
+
+.market-card.warn {
+  border-color: #e5bd75;
+  background: #fffaf0;
+}
+
+.market-card.warn em,
+.market-card.warn b {
+  color: #9b5d10;
+}
+
+.market-card.danger {
+  border-color: #e2a3aa;
+  background: #fff4f4;
+}
+
+.market-card.danger em,
+.market-card.danger b {
+  color: #9b2035;
+}
+
+.evidence-row {
+  min-height: 54px;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 5px 9px;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #dce5e1;
+  border-radius: 8px;
+  background: #f7faf8;
+}
+
+.evidence-row svg {
+  color: #899087;
+}
+
+.evidence-row.done svg {
+  color: #0b8d79;
+}
+
+.evidence-row span {
+  color: #68716c;
+  font-size: 0.78rem;
+}
+
+.evidence-row strong {
+  grid-column: 2;
+  color: #1f2b28;
+  overflow-wrap: anywhere;
+  font-size: 0.88rem;
+}
+
+.compliance-panel p {
+  padding: 0 16px 16px;
+  color: #52615b;
+  line-height: 1.48;
+  font-size: 0.9rem;
+}
+
+.command-layout .report-grid {
+  grid-template-columns: 1fr 1fr;
+}
+
+.command-layout .report-primary {
+  grid-column: 1 / -1;
+  grid-row: auto;
+  min-height: 122px;
+}
+
+.command-layout .driver-strip span {
+  width: 100%;
+  justify-content: space-between;
+}
+
+.right-rail .agent-row {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.right-rail .timeline-item {
+  grid-template-columns: 48px minmax(0, 1fr);
+}
+
+.right-rail .timeline-item strong {
+  grid-column: 2;
+}
+
+.deploy-band {
+  border-color: rgba(18, 72, 61, 0.14);
+}
+
 @media (max-width: 1120px) {
+  .command-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .left-rail,
+  .right-rail {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .compliance-panel,
+  .timeline-panel {
+    grid-column: span 2;
+  }
+
   .os-hero,
   .os-grid,
   .os-intel-grid {
@@ -1359,9 +1704,22 @@ input[type="range"] {
 
   .os-hero,
   .os-grid,
+  .command-layout,
+  .left-rail,
+  .right-rail,
   .os-intel-grid,
   .hero-metrics {
     grid-template-columns: 1fr;
+  }
+
+  .console-grid {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "command"
+      "oracle"
+      "launch"
+      "trader"
+      "policy";
   }
 
   .os-grid {
@@ -1382,7 +1740,9 @@ input[type="range"] {
   }
 
   .ops-panel,
-  .report-panel {
+  .report-panel,
+  .compliance-panel,
+  .timeline-panel {
     grid-column: auto;
   }
 

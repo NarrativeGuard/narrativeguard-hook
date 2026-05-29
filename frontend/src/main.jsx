@@ -155,6 +155,17 @@ function App() {
     { time: "T+08", label: t("timelineDecision"), value: decision.status, tone: decision.tone },
     { time: "T+12", label: t("timelineFeeOverride"), value: formatFee(feePips), tone: feeSlope > 70 ? "danger" : feeSlope > 35 ? "warn" : "ok" },
   ];
+  const protectedPools = [
+    { name: "NGM / OKB", type: t("poolGuardedMeme"), score: riskScore, status: operatingMode, tone },
+    { name: "FRESH / OKB", type: t("poolLaunchWatch"), score: attackerPressure, status: t("poolStatusWatch"), tone: scoreTone(attackerPressure) },
+    { name: "MM / OKB", type: t("poolMakerLane"), score: healthBuffer, status: t("poolStatusAttested"), tone: scoreTone(100 - healthBuffer) },
+  ];
+  const evidenceItems = [
+    { label: t("evidenceHook"), value: "0xAa24...4080", done: true },
+    { label: t("evidencePool"), value: "0xa9e0...c893", done: true },
+    { label: t("evidenceManager"), value: "0x360E...9FB32", done: true },
+    { label: t("evidencePolicy"), value: `${activeRules} ${t("activeRules")}`, done: activeRules > 0 },
+  ];
 
   function updateSignal(id, value) {
     setSignals((current) => current.map((signal) => (signal.id === id ? { ...signal, value } : signal)));
@@ -205,7 +216,7 @@ function App() {
   }
 
   return (
-    <main className="app-shell risk-os-shell">
+    <main className="app-shell risk-os-shell" data-testid="risk-os-app">
       <header className="topbar os-topbar">
         <div className="brand-block">
           <div className="brand-mark">
@@ -223,7 +234,7 @@ function App() {
         <div className="top-actions">
           <label className="language-select" title={t("language")}>
             <Languages size={17} />
-            <select value={language} onChange={(event) => setLanguage(event.target.value)} aria-label={t("language")}>
+            <select data-testid="language-select" value={language} onChange={(event) => setLanguage(event.target.value)} aria-label={t("language")}>
               {LANGUAGES.map((item) => (
                 <option key={item.code} value={item.code}>
                   {item.label}
@@ -231,10 +242,15 @@ function App() {
               ))}
             </select>
           </label>
-          <button className={`icon-action ${paused ? "danger" : ""}`} onClick={() => setPaused((value) => !value)} title={paused ? t("resumePool") : t("pausePool")}>
+          <button
+            className={`icon-action ${paused ? "danger" : ""}`}
+            data-testid="top-pause-toggle"
+            onClick={() => setPaused((value) => !value)}
+            title={paused ? t("resumePool") : t("pausePool")}
+          >
             {paused ? <Play size={18} /> : <Pause size={18} />}
           </button>
-          <button className="icon-action" onClick={resetDemo} title={t("resetDemo")}>
+          <button className="icon-action" data-testid="reset-demo" onClick={resetDemo} title={t("resetDemo")}>
             <RefreshCcw size={18} />
           </button>
         </div>
@@ -265,224 +281,265 @@ function App() {
         </div>
       </section>
 
-      <section className="os-grid">
-        <section className="panel os-panel launch-panel">
-          <PanelTitle eyebrow={t("launchShield")} title={t("launchTemplates")} icon={Rocket} />
-          <div className="template-list">
-            {LAUNCH_TEMPLATES.map((template) => (
-              <button
-                className={`template-card ${selectedTemplate === template.id ? "selected" : ""}`}
-                key={template.id}
-                onClick={() => applyTemplate(template)}
-              >
-                <strong>{t(template.titleKey)}</strong>
-                <span>{t(template.copyKey)}</span>
-              </button>
-            ))}
-          </div>
-        </section>
-
-        <section className="panel os-panel oracle-panel">
-          <PanelTitle eyebrow={t("oracleInput")} title={t("oracleTitle")} icon={SlidersHorizontal} />
-          <div className="signal-list os-signal-list">
-            {signals.map((signal) => {
-              const Icon = signal.icon;
-              return (
-                <label className="signal-row compact-signal" key={signal.id}>
-                  <span className={`signal-icon ${signal.tone}`}>
-                    <Icon size={18} />
+      <section className="command-layout">
+        <aside className="left-rail">
+          <section className="panel os-panel market-panel">
+            <PanelTitle eyebrow={t("marketRailEyebrow")} title={t("marketRailTitle")} icon={Shield} />
+            <div className="market-list">
+              {protectedPools.map((pool) => (
+                <button className={`market-card ${pool.tone}`} key={pool.name}>
+                  <span>
+                    <strong>{pool.name}</strong>
+                    <small>{pool.type}</small>
                   </span>
-                  <span className="signal-copy">
-                    <span>{t(signal.labelKey)}</span>
-                    <strong>{signal.value}</strong>
-                  </span>
-                  <input
-                    type="range"
-                    min="0"
-                    max="100"
-                    value={signal.value}
-                    onChange={(event) => updateSignal(signal.id, Number(event.target.value))}
-                  />
-                </label>
-              );
-            })}
-          </div>
-        </section>
-
-        <section className="panel os-panel command-panel">
-          <PanelTitle eyebrow={t("commandCenter")} title={t("poolCommand")} icon={Gauge} />
-          <div className="risk-board os-risk-board">
-            <div className={`risk-ring ${tone}`} style={{ "--score": `${riskScore * 3.6}deg` }}>
-              <div className="risk-core">
-                <span>{riskScore}</span>
-                <small>{t("risk")}</small>
-              </div>
-            </div>
-            <div className="risk-copy">
-              <p className="eyebrow">{t("hookDecision")}</p>
-              <div className={`decision-pill ${decision.tone}`}>
-                <DecisionIcon size={18} />
-                <strong>{decision.status}</strong>
-                <span>{decision.reason}</span>
-              </div>
-              <div className="fee-stack">
-                <div>
-                  <span>{t("activeRules")}</span>
-                  <strong>{activeRules}</strong>
-                </div>
-                <div>
-                  <span>{t("override")}</span>
-                  <strong>{formatFee(feePips)}</strong>
-                </div>
-                <div>
-                  <span>{t("max")}</span>
-                  <strong>{formatFee(maxFee)}</strong>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="panel os-panel trader-panel">
-          <PanelTitle eyebrow={t("traderProtection")} title={t("tradeSimulator")} icon={TimerReset} />
-          <div className="trade-grid">
-            <label className="field">
-              <span>{t("tradeSize")}</span>
-              <input type="number" min="0" value={tradeSize} onChange={(event) => setTradeSize(Number(event.target.value))} />
-            </label>
-            <label className="field">
-              <span>{t("maxTrade")}</span>
-              <input type="number" min="0" value={maxTrade} onChange={(event) => setMaxTrade(Number(event.target.value))} />
-            </label>
-          </div>
-          <div className="segmented" aria-label={t("listMode")}>
-            {[
-              ["normal", t("normal")],
-              ["whitelist", t("whitelist")],
-              ["blacklist", t("blacklist")],
-            ].map(([value, label]) => (
-              <button key={value} className={listMode === value ? "selected" : ""} onClick={() => setListMode(value)}>
-                {label}
-              </button>
-            ))}
-          </div>
-          <div className="protection-readout">
-            <div>
-              <span>{t("estimatedFee")}</span>
-              <strong>{formatFee(feePips)}</strong>
-            </div>
-            <div>
-              <span>{t("cooldown")}</span>
-              <strong>{cooldownActive ? t("on") : `${cooldown}s`}</strong>
-            </div>
-          </div>
-        </section>
-
-        <section className="panel os-panel policy-panel">
-          <PanelTitle eyebrow={t("adminPolicy")} title={t("ruleControls")} icon={Shield} />
-          <div className="control-stack compact-controls">
-            <label className="field">
-              <span>{t("baseFeePips")}</span>
-              <input type="number" min="0" max={maxFee} value={baseFee} onChange={(event) => setBaseFee(Number(event.target.value))} />
-            </label>
-            <label className="field">
-              <span>{t("maxFeePips")}</span>
-              <input type="number" min={baseFee} max="1000000" value={maxFee} onChange={(event) => setMaxFee(Number(event.target.value))} />
-            </label>
-            <label className="field">
-              <span>{t("antiSnipeThreshold")}</span>
-              <input type="number" min="0" max="100" value={antiSnipeThreshold} onChange={(event) => setAntiSnipeThreshold(Number(event.target.value))} />
-            </label>
-          </div>
-          <div className="rule-list os-rule-list">
-            <Rule label={t("emergencyPause")} active={paused} onClick={() => setPaused((value) => !value)} t={t} danger />
-            <Rule label={t("antiSnipe")} active={antiSnipeWindow} onClick={() => setAntiSnipeWindow((value) => !value)} t={t} danger={antiSnipeWindow && riskScore >= antiSnipeThreshold} />
-            <Rule label={t("singleTradeCap")} active={tradeSize > maxTrade} onClick={toggleTradeCapPreview} t={t} />
-            <Rule label={t("cooldown")} active={cooldownActive} onClick={() => setCooldownActive((value) => !value)} t={t} />
-          </div>
-        </section>
-      </section>
-
-      <section className="os-intel-grid">
-        <section className="panel os-panel report-panel">
-          <PanelTitle eyebrow={t("riskReportEyebrow")} title={t("riskReportTitle")} icon={AlertTriangle} />
-          <div className="report-grid">
-            <div className={`report-primary ${riskBand.tone}`}>
-              <span>{t("riskBand")}</span>
-              <strong>{riskBand.label}</strong>
-              <small>{riskBand.copy}</small>
-            </div>
-            <ReportMetric label={t("marketPressure")} value={`${marketPressure}%`} tone={scoreTone(marketPressure)} />
-            <ReportMetric label={t("attackerPressure")} value={`${attackerPressure}%`} tone={scoreTone(attackerPressure)} />
-            <ReportMetric label={t("healthBuffer")} value={`${healthBuffer}%`} tone={scoreTone(100 - healthBuffer)} />
-            <ReportMetric label={t("feeSlope")} value={`${feeSlope}%`} tone={scoreTone(feeSlope)} />
-          </div>
-          <div className="driver-strip">
-            {leadSignals.map((signal) => (
-              <span key={signal.id}>
-                {t(signal.labelKey)} <strong>{signal.value}</strong>
-              </span>
-            ))}
-          </div>
-        </section>
-
-        <section className="panel os-panel agent-panel">
-          <PanelTitle eyebrow={t("agentMesh")} title={t("agentMeshTitle")} icon={Sparkles} />
-          <div className="agent-list">
-            {agentRows.map((agent) => (
-              <div className={`agent-row ${agent.tone}`} key={agent.label}>
-                <span>{agent.label}</span>
-                <strong>{agent.value}</strong>
-                <small>{agent.status}</small>
-              </div>
-            ))}
-          </div>
-          <div className="quorum-bar">
-            <span>{t("quorum")}</span>
-            <strong>3/4</strong>
-            <em>{t("agentsOnline")}</em>
-          </div>
-        </section>
-
-        <section className="panel os-panel timeline-panel">
-          <PanelTitle eyebrow={t("timelineEyebrow")} title={t("timelineTitle")} icon={Clock} />
-          <div className="timeline-list">
-            {timelineRows.map((row) => (
-              <div className={`timeline-item ${row.tone}`} key={`${row.time}-${row.label}`}>
-                <time>{row.time}</time>
-                <span>{row.label}</span>
-                <strong>{row.value}</strong>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section className="panel os-panel ops-panel">
-          <PanelTitle eyebrow={t("opsEyebrow")} title={t("opsTitle")} icon={Shield} />
-          <div className="ops-grid">
-            <div className="ops-mode">
-              <span>{t("operatingMode")}</span>
-              <strong>{operatingMode}</strong>
-            </div>
-            <div className="ops-queue">
-              {actionQueue.map((item) => (
-                <button
-                  type="button"
-                  key={item.label}
-                  className={`queue-chip ${item.active ? item.tone : ""}`}
-                  onClick={() => {
-                    if (item.label === t("queueTightenCaps")) toggleTradeCapPreview();
-                    if (item.label === t("queueMakerList")) setListMode((value) => (value === "whitelist" ? "normal" : "whitelist"));
-                    if (item.label === t("queuePause")) setPaused((value) => !value);
-                  }}
-                >
-                  <span>{item.label}</span>
-                  <strong>{item.active ? t("ready") : t("standby")}</strong>
+                  <em>{pool.score}</em>
+                  <b>{pool.status}</b>
                 </button>
               ))}
             </div>
-          </div>
-        </section>
+          </section>
+
+          <section className="panel os-panel evidence-panel">
+            <PanelTitle eyebrow={t("evidenceEyebrow")} title={t("evidenceTitle")} icon={Lock} />
+            <div className="evidence-list">
+              {evidenceItems.map((item) => (
+                <div className={`evidence-row ${item.done ? "done" : ""}`} key={item.label}>
+                  <Check size={15} />
+                  <span>{item.label}</span>
+                  <strong>{item.value}</strong>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section className="panel os-panel compliance-panel">
+            <PanelTitle eyebrow={t("complianceEyebrow")} title={t("complianceTitle")} icon={Check} />
+            <p>{t("complianceCopy")}</p>
+          </section>
+        </aside>
+
+        <div className="console-main">
+          <section className="panel os-panel ops-panel console-ops">
+            <PanelTitle eyebrow={t("opsEyebrow")} title={t("opsTitle")} icon={Shield} />
+            <div className="ops-grid">
+              <div className="ops-mode">
+                <span>{t("operatingMode")}</span>
+                <strong>{operatingMode}</strong>
+              </div>
+              <div className="ops-queue">
+                {actionQueue.map((item) => (
+                  <button
+                    type="button"
+                    key={item.label}
+                    className={`queue-chip ${item.active ? item.tone : ""}`}
+                    onClick={() => {
+                      if (item.label === t("queueTightenCaps")) toggleTradeCapPreview();
+                      if (item.label === t("queueMakerList")) setListMode((value) => (value === "whitelist" ? "normal" : "whitelist"));
+                      if (item.label === t("queuePause")) setPaused((value) => !value);
+                    }}
+                  >
+                    <span>{item.label}</span>
+                    <strong>{item.active ? t("ready") : t("standby")}</strong>
+                  </button>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          <section className="os-grid console-grid">
+            <section className="panel os-panel command-panel">
+              <PanelTitle eyebrow={t("commandCenter")} title={t("poolCommand")} icon={Gauge} />
+              <div className="risk-board os-risk-board">
+                <div className={`risk-ring ${tone}`} style={{ "--score": `${riskScore * 3.6}deg` }}>
+                  <div className="risk-core">
+                    <span>{riskScore}</span>
+                    <small>{t("risk")}</small>
+                  </div>
+                </div>
+                <div className="risk-copy">
+                  <p className="eyebrow">{t("hookDecision")}</p>
+                  <div className={`decision-pill ${decision.tone}`}>
+                    <DecisionIcon size={18} />
+                    <strong>{decision.status}</strong>
+                    <span>{decision.reason}</span>
+                  </div>
+                  <div className="fee-stack">
+                    <div>
+                      <span>{t("activeRules")}</span>
+                      <strong>{activeRules}</strong>
+                    </div>
+                    <div>
+                      <span>{t("override")}</span>
+                      <strong>{formatFee(feePips)}</strong>
+                    </div>
+                    <div>
+                      <span>{t("max")}</span>
+                      <strong>{formatFee(maxFee)}</strong>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section className="panel os-panel oracle-panel">
+              <PanelTitle eyebrow={t("oracleInput")} title={t("oracleTitle")} icon={SlidersHorizontal} />
+              <div className="signal-list os-signal-list">
+                {signals.map((signal) => {
+                  const Icon = signal.icon;
+                  return (
+                    <label className="signal-row compact-signal" key={signal.id}>
+                      <span className={`signal-icon ${signal.tone}`}>
+                        <Icon size={18} />
+                      </span>
+                      <span className="signal-copy">
+                        <span>{t(signal.labelKey)}</span>
+                        <strong>{signal.value}</strong>
+                      </span>
+                      <input
+                        type="range"
+                        min="0"
+                        max="100"
+                        value={signal.value}
+                        onChange={(event) => updateSignal(signal.id, Number(event.target.value))}
+                      />
+                    </label>
+                  );
+                })}
+              </div>
+            </section>
+
+            <section className="panel os-panel launch-panel">
+              <PanelTitle eyebrow={t("launchShield")} title={t("launchTemplates")} icon={Rocket} />
+              <div className="template-list">
+                {LAUNCH_TEMPLATES.map((template) => (
+                  <button
+                    className={`template-card ${selectedTemplate === template.id ? "selected" : ""}`}
+                    data-testid={`template-${template.id}`}
+                    key={template.id}
+                    onClick={() => applyTemplate(template)}
+                  >
+                    <strong>{t(template.titleKey)}</strong>
+                    <span>{t(template.copyKey)}</span>
+                  </button>
+                ))}
+              </div>
+            </section>
+
+            <section className="panel os-panel trader-panel">
+              <PanelTitle eyebrow={t("traderProtection")} title={t("tradeSimulator")} icon={TimerReset} />
+              <div className="trade-grid">
+                <label className="field">
+                  <span>{t("tradeSize")}</span>
+                  <input type="number" min="0" value={tradeSize} onChange={(event) => setTradeSize(Number(event.target.value))} />
+                </label>
+                <label className="field">
+                  <span>{t("maxTrade")}</span>
+                  <input type="number" min="0" value={maxTrade} onChange={(event) => setMaxTrade(Number(event.target.value))} />
+                </label>
+              </div>
+              <div className="segmented" aria-label={t("listMode")}>
+                {[
+                  ["normal", t("normal")],
+                  ["whitelist", t("whitelist")],
+                  ["blacklist", t("blacklist")],
+                ].map(([value, label]) => (
+                  <button key={value} className={listMode === value ? "selected" : ""} data-testid={`list-mode-${value}`} onClick={() => setListMode(value)}>
+                    {label}
+                  </button>
+                ))}
+              </div>
+              <div className="protection-readout">
+                <div>
+                  <span>{t("estimatedFee")}</span>
+                  <strong>{formatFee(feePips)}</strong>
+                </div>
+                <div>
+                  <span>{t("cooldown")}</span>
+                  <strong>{cooldownActive ? t("on") : `${cooldown}s`}</strong>
+                </div>
+              </div>
+            </section>
+
+            <section className="panel os-panel policy-panel">
+              <PanelTitle eyebrow={t("adminPolicy")} title={t("ruleControls")} icon={Shield} />
+              <div className="control-stack compact-controls">
+                <label className="field">
+                  <span>{t("baseFeePips")}</span>
+                  <input type="number" min="0" max={maxFee} value={baseFee} onChange={(event) => setBaseFee(Number(event.target.value))} />
+                </label>
+                <label className="field">
+                  <span>{t("maxFeePips")}</span>
+                  <input type="number" min={baseFee} max="1000000" value={maxFee} onChange={(event) => setMaxFee(Number(event.target.value))} />
+                </label>
+                <label className="field">
+                  <span>{t("antiSnipeThreshold")}</span>
+                  <input type="number" min="0" max="100" value={antiSnipeThreshold} onChange={(event) => setAntiSnipeThreshold(Number(event.target.value))} />
+                </label>
+              </div>
+              <div className="rule-list os-rule-list">
+                <Rule testId="rule-emergency-pause" label={t("emergencyPause")} active={paused} onClick={() => setPaused((value) => !value)} t={t} danger />
+                <Rule testId="rule-anti-snipe" label={t("antiSnipe")} active={antiSnipeWindow} onClick={() => setAntiSnipeWindow((value) => !value)} t={t} danger={antiSnipeWindow && riskScore >= antiSnipeThreshold} />
+                <Rule testId="rule-single-trade-cap" label={t("singleTradeCap")} active={tradeSize > maxTrade} onClick={toggleTradeCapPreview} t={t} />
+                <Rule testId="rule-cooldown" label={t("cooldown")} active={cooldownActive} onClick={() => setCooldownActive((value) => !value)} t={t} />
+              </div>
+            </section>
+          </section>
+        </div>
+
+        <aside className="right-rail">
+          <section className="panel os-panel report-panel">
+            <PanelTitle eyebrow={t("riskReportEyebrow")} title={t("riskReportTitle")} icon={AlertTriangle} />
+            <div className="report-grid">
+              <div className={`report-primary ${riskBand.tone}`}>
+                <span>{t("riskBand")}</span>
+                <strong>{riskBand.label}</strong>
+                <small>{riskBand.copy}</small>
+              </div>
+              <ReportMetric label={t("marketPressure")} value={`${marketPressure}%`} tone={scoreTone(marketPressure)} />
+              <ReportMetric label={t("attackerPressure")} value={`${attackerPressure}%`} tone={scoreTone(attackerPressure)} />
+              <ReportMetric label={t("healthBuffer")} value={`${healthBuffer}%`} tone={scoreTone(100 - healthBuffer)} />
+              <ReportMetric label={t("feeSlope")} value={`${feeSlope}%`} tone={scoreTone(feeSlope)} />
+            </div>
+            <div className="driver-strip">
+              {leadSignals.map((signal) => (
+                <span key={signal.id}>
+                  {t(signal.labelKey)} <strong>{signal.value}</strong>
+                </span>
+              ))}
+            </div>
+          </section>
+
+          <section className="panel os-panel agent-panel">
+            <PanelTitle eyebrow={t("agentMesh")} title={t("agentMeshTitle")} icon={Sparkles} />
+            <div className="agent-list">
+              {agentRows.map((agent) => (
+                <div className={`agent-row ${agent.tone}`} key={agent.label}>
+                  <span>{agent.label}</span>
+                  <strong>{agent.value}</strong>
+                  <small>{agent.status}</small>
+                </div>
+              ))}
+            </div>
+            <div className="quorum-bar">
+              <span>{t("quorum")}</span>
+              <strong>3/4</strong>
+              <em>{t("agentsOnline")}</em>
+            </div>
+          </section>
+
+          <section className="panel os-panel timeline-panel">
+            <PanelTitle eyebrow={t("timelineEyebrow")} title={t("timelineTitle")} icon={Clock} />
+            <div className="timeline-list">
+              {timelineRows.map((row) => (
+                <div className={`timeline-item ${row.tone}`} key={`${row.time}-${row.label}`}>
+                  <time>{row.time}</time>
+                  <span>{row.label}</span>
+                  <strong>{row.value}</strong>
+                </div>
+              ))}
+            </div>
+          </section>
+        </aside>
       </section>
 
       <DeployPanel t={t} />
@@ -520,9 +577,9 @@ function ReportMetric({ label, value, tone = "" }) {
   );
 }
 
-function Rule({ label, active, onClick, t, danger = false }) {
+function Rule({ label, active, onClick, t, danger = false, testId }) {
   return (
-    <button type="button" className={`rule-row ${active ? (danger ? "danger" : "active") : ""}`} onClick={onClick}>
+    <button type="button" className={`rule-row ${active ? (danger ? "danger" : "active") : ""}`} data-testid={testId} onClick={onClick}>
       <span>{label}</span>
       <strong>{active ? t("on") : t("off")}</strong>
     </button>

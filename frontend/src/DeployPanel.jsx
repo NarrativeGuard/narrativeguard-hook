@@ -754,7 +754,7 @@ export function DeployPanel({ t }) {
   }
 
   return (
-    <section className="deploy-band">
+    <section className="deploy-band" data-testid="deploy-panel">
       <div className="deploy-heading">
         <div>
           <p className="eyebrow">{t("deployEyebrow")}</p>
@@ -766,7 +766,7 @@ export function DeployPanel({ t }) {
       <div className="deploy-grid">
         <label className="field">
           <span>{t("network")}</span>
-          <select value={networkKey} onChange={(event) => setNetworkKey(event.target.value)}>
+          <select data-testid="network-select" value={networkKey} onChange={(event) => setNetworkKey(event.target.value)}>
             {Object.entries(chains).map(([key, value]) => (
               <option value={key} key={key}>
                 {t(value.labelKey)}
@@ -777,24 +777,24 @@ export function DeployPanel({ t }) {
 
         <label className="field wide">
           <span>{t("poolManager")}</span>
-          <input value={poolManager} onChange={(event) => setPoolManager(event.target.value)} placeholder="0x..." />
+          <input data-testid="pool-manager-input" value={poolManager} onChange={(event) => setPoolManager(event.target.value)} placeholder="0x..." />
         </label>
 
         <label className="field wide">
           <span>{t("riskOracle")}</span>
-          <input value={riskOracle} onChange={(event) => setRiskOracle(event.target.value)} placeholder={t("riskOraclePlaceholder")} />
+          <input data-testid="risk-oracle-input" value={riskOracle} onChange={(event) => setRiskOracle(event.target.value)} placeholder={t("riskOraclePlaceholder")} />
         </label>
 
         <div className="wallet-card">
-          <div>
+          <div data-testid="wallet-provider-status">
             <span>{t("walletProvider")}</span>
             <strong>{walletProviderLabel || t(walletProviderKind === "okx" ? "okxWallet" : "injectedWallet")}</strong>
           </div>
-          <div>
+          <div data-testid="wallet-address-status">
             <span>{t("wallet")}</span>
             <strong>{walletAddress ? shortAddress(walletAddress) : t("notConnected")}</strong>
           </div>
-          <div>
+          <div data-testid="wallet-chain-status">
             <span>{t("chain")}</span>
             <strong className={connectedToTarget ? "ok-text" : "warn-text"}>
               {walletChainId || "n/a"}
@@ -804,27 +804,27 @@ export function DeployPanel({ t }) {
       </div>
 
       <div className="deploy-actions">
-        <button onClick={() => connectWallet("okx")} disabled={busy}>
+        <button data-testid="connect-okx" onClick={() => connectWallet("okx")} disabled={busy}>
           <Wallet size={18} />
           {t("connectOkx")}
         </button>
-        <button onClick={() => connectWallet("injected")} disabled={busy}>
+        <button data-testid="connect-injected" onClick={() => connectWallet("injected")} disabled={busy}>
           <Wallet size={18} />
           {t("connectInjected")}
         </button>
-        <button onClick={switchNetwork} disabled={busy}>
+        <button data-testid="switch-add-network" onClick={switchNetwork} disabled={busy}>
           <Network size={18} />
           {t("switchAdd")}
         </button>
-        <button onClick={loadCurrentDeployment} disabled={busy}>
+        <button data-testid="load-current" onClick={loadCurrentDeployment} disabled={busy}>
           <CheckCircle size={18} />
           {t("loadCurrent")}
         </button>
-        <button onClick={deployHook} disabled={busy || !poolManager}>
+        <button data-testid="deploy-hook" onClick={deployHook} disabled={busy || !poolManager}>
           <Rocket size={18} />
           {t("deployHook")}
         </button>
-        <button onClick={deployDemoPool} disabled={busy || !hookAddress || !poolManager}>
+        <button data-testid="init-demo-pool" onClick={deployDemoPool} disabled={busy || !hookAddress || !poolManager}>
           <CheckCircle size={18} />
           {t("initDemoPool")}
         </button>
@@ -857,12 +857,13 @@ export function DeployPanel({ t }) {
               min="0"
               max="10000"
               value={liveRiskScore}
+              data-testid="risk-score-input"
               onChange={(event) => setLiveRiskScore(Math.max(0, Math.min(10_000, Number(event.target.value))))}
             />
           </label>
           <label className="field wide">
             <span>{t("sourceURI")}</span>
-            <input value={liveSourceURI} onChange={(event) => setLiveSourceURI(event.target.value)} />
+            <input data-testid="source-uri-input" value={liveSourceURI} onChange={(event) => setLiveSourceURI(event.target.value)} />
           </label>
           <div className="result-row">
             <span>{t("liveFee")}</span>
@@ -877,19 +878,19 @@ export function DeployPanel({ t }) {
         </div>
 
         <div className="deploy-actions">
-          <button onClick={refreshLivePolicy} disabled={busy || !hookAddress || !demoToken0 || !demoToken1}>
+          <button data-testid="refresh-onchain" onClick={refreshLivePolicy} disabled={busy || !hookAddress || !demoToken0 || !demoToken1}>
             <RefreshCcw size={18} />
             {t("refreshOnchain")}
           </button>
-          <button onClick={updateLiveRiskScore} disabled={busy || !hookAddress || !demoToken0 || !demoToken1}>
+          <button data-testid="update-score" onClick={updateLiveRiskScore} disabled={busy || !hookAddress || !demoToken0 || !demoToken1}>
             <Rocket size={18} />
             {t("updateScore")}
           </button>
-          <button onClick={() => setLiveEmergencyPause(true)} disabled={busy || !hookAddress || !demoToken0 || !demoToken1}>
+          <button data-testid="live-pause" onClick={() => setLiveEmergencyPause(true)} disabled={busy || !hookAddress || !demoToken0 || !demoToken1}>
             <Pause size={18} />
             {t("pause")}
           </button>
-          <button onClick={() => setLiveEmergencyPause(false)} disabled={busy || !hookAddress || !demoToken0 || !demoToken1}>
+          <button data-testid="live-resume" onClick={() => setLiveEmergencyPause(false)} disabled={busy || !hookAddress || !demoToken0 || !demoToken1}>
             <Play size={18} />
             {t("resume")}
           </button>
@@ -909,7 +910,7 @@ export function DeployPanel({ t }) {
             <p className="eyebrow">{t("activityEyebrow")}</p>
             <h2>{t("activityTitle")}</h2>
           </div>
-          <button className="mini-button" onClick={refreshOnchainActivity} disabled={busy}>
+          <button className="mini-button" data-testid="refresh-activity" onClick={refreshOnchainActivity} disabled={busy}>
             <RefreshCcw size={16} />
             {t("refreshActivity")}
           </button>
